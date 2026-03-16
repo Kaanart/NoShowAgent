@@ -4,8 +4,24 @@ import Waitlist from './components/Waitlist';
 
 function App() {
   const [appointments] = useState([
-    { id: 1, age: 30, past_no_shows: 0, risk_score: 0.1 },
-    { id: 2, age: 25, past_no_shows: 5, risk_score: 0.8 },
+    { 
+      id: 1, 
+      patient_name: "John Doe",
+      age: 30, 
+      past_no_shows: 0, 
+      risk_score: 0.1,
+      appointment_date: "2026-03-23",
+      appointment_time: "10:00"
+    },
+    { 
+      id: 2, 
+      patient_name: "Jane Smith",
+      age: 25, 
+      past_no_shows: 5, 
+      risk_score: 0.8,
+      appointment_date: "2026-03-24",
+      appointment_time: "14:30"
+    },
   ]);
 
   const [waitlistPatients] = useState([
