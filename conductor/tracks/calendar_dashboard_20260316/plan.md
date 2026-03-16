@@ -7,9 +7,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Data Updates' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Calendar Integration
-- [ ] Task: Build calendar view components
-    - [ ] Write Tests for calendar rendering and appointment placement
-    - [ ] Implement Feature: React calendar UI for the Risk Dashboard replacing the table
+- [x] Task: Build calendar view components
+    - [x] Write Tests for calendar rendering and appointment placement (1a3ec84)
+    - [x] Implement Feature: React calendar UI for the Risk Dashboard replacing the table (1a3ec84)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Frontend Calendar Integration' (Protocol in workflow.md)
 
 ## Phase 3: Refinement and Styling
