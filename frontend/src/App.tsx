@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Waitlist from './components/Waitlist';
 import Sidebar from './components/Sidebar';
+import CalendarView from './components/CalendarView';
 import './App.css';
 
 function App() {
@@ -48,9 +49,9 @@ function App() {
       );
     } else if (currentView === 'Schedule') {
       return (
-        <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-dark)' }}>
-          <h2>Schedule View Placeholder</h2>
-          <p>This is where the full schedule would go.</p>
+        <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+          <h2 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Weekly Schedule</h2>
+          <CalendarView appointments={appointments} onPromote={handlePromote} />
         </div>
       );
     }

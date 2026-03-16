@@ -9,7 +9,7 @@ test('renders main layout with Sidebar and Dashboard by default', () => {
   expect(screen.getByText('MedSchedule')).toBeInTheDocument();
   
   // Verify default view is Daily Dashboard
-  expect(screen.getByText(/One-Week Outlook/i)).toBeInTheDocument();
+  expect(screen.getByText(/One Day Outlook/i)).toBeInTheDocument();
   expect(screen.getByText(/Suggested Backups/i)).toBeInTheDocument();
 });
 
@@ -21,6 +21,6 @@ test('toggles to Schedule view', () => {
   fireEvent.click(scheduleLink);
   
   // Verify Dashboard is gone and Schedule placeholder is present
-  expect(screen.queryByText(/One-Week Outlook/i)).not.toBeInTheDocument();
-  expect(screen.getByText(/Schedule View Placeholder/i)).toBeInTheDocument();
+  expect(screen.queryByText(/One Day Outlook/i)).not.toBeInTheDocument();
+  expect(screen.getByText(/Monday/i)).toBeInTheDocument(); // Checking for CalendarView
 });

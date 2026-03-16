@@ -27,17 +27,17 @@ test('renders dashboard with summary metrics and calendar', () => {
   render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
   
   // New heading
-  expect(screen.getByText(/One-Week Outlook/i)).toBeInTheDocument();
+  expect(screen.getByText(/One Day Outlook/i)).toBeInTheDocument();
   
   // Summary Metrics
   expect(screen.getByText(/No-Show Risk/i)).toBeInTheDocument();
   expect(screen.getByText(/Slots to Backfill/i)).toBeInTheDocument();
   expect(screen.getByText(/Utilization/i)).toBeInTheDocument();
 
-  // Calendar components still exist
-  expect(screen.getByText(/ID: 1/i)).toBeInTheDocument();
-  expect(screen.getByText(/ID: 2/i)).toBeInTheDocument();
-  expect(screen.getByText(/Risk: 80%/i)).toBeInTheDocument();
+  // Calendar components still exist (now as table rows)
+  expect(screen.getByText('1')).toBeInTheDocument();
+  expect(screen.getByText('2')).toBeInTheDocument();
+  expect(screen.getByText(/80%/i)).toBeInTheDocument();
 });
 
 test('renders Auto-Promote button only for high-risk appointments', () => {
