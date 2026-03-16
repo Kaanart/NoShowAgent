@@ -12,8 +12,8 @@
     - [x] Implement Feature for auto-promoting waitlisted patients (4ec3209)
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Waitlist Auto-Promote Logic' (Protocol in workflow.md)
 
-## Phase 3: Frontend Waitlist Integration
+## Phase 3: Frontend Waitlist Integration [checkpoint: f43cea1]
 - [x] Task: Build waitlist UI components
     - [x] Write Tests for frontend waitlist components (fb0f573)
     - [x] Implement Feature: React views for waitlist management and auto-promote buttons (fb0f573)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Frontend Waitlist Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Frontend Waitlist Integration' (Protocol in workflow.md)
