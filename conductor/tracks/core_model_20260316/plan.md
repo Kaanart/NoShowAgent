@@ -10,8 +10,8 @@
 
 ## Phase 2: No-Show Prediction Model API
 - [ ] Task: Develop risk ranking prediction endpoints
-    - [ ] Write Tests for risk evaluation logic
-    - [ ] Implement Feature for model inference and ranking
+    - [x] Write Tests for risk evaluation logic (54bce3b)
+    - [~] Implement Feature for model inference and ranking
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: No-Show Prediction Model API' (Protocol in workflow.md)
 
 ## Phase 3: Interactive Dashboard UI
