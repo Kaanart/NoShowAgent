@@ -16,6 +16,6 @@
 
 ## Phase 3: Interactive Dashboard UI
 - [ ] Task: Build risk dashboard and waitlist UI
-    - [ ] Write Tests for frontend components (Risk Ranking, Tech Schedule)
-    - [ ] Implement Feature: React views for scheduler and tech interfaces
+    - [x] Write Tests for frontend components (Risk Ranking, Tech Schedule) (1d33ac1)
+    - [~] Implement Feature: React views for scheduler and tech interfaces
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Interactive Dashboard UI' (Protocol in workflow.md)
