@@ -31,3 +31,26 @@ def get_waitlist():
         {"id": 102, "patient_name": "Jane Smith", "urgency": "medium", "requested_days": [2, 3]},
         {"id": 103, "patient_name": "Alice Johnson", "urgency": "low", "requested_days": [1, 4, 5]}
     ]
+
+from fastapi import HTTPException
+
+@app.post("/promote/{appointment_id}")
+def promote_patient(appointment_id: int):
+    """
+    Simulates auto-promoting a waitlist patient to fill a high-risk appointment slot.
+    """
+    if appointment_id == 999:
+        raise HTTPException(status_code=404, detail="Appointment not found")
+        
+    # In a real system, we'd query the waitlist, find the best match, 
+    # update the database, and send a notification.
+    # For now, we mock a successful promotion using the first waitlist patient.
+    waitlist = get_waitlist()
+    best_candidate = waitlist[0] 
+    
+    return {
+        "status": "success",
+        "original_appointment_id": appointment_id,
+        "promoted_patient_id": best_candidate["id"],
+        "message": f"Successfully promoted patient {best_candidate['patient_name']}."
+    }
