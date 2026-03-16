@@ -17,7 +17,7 @@ function App() {
         "past_no_shows": 5,
         "risk_score": 0.8,
         "appointment_date": "2026-03-27",
-        "appointment_time": "16:00",
+        "appointment_time": "08:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -28,7 +28,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.37,
         "appointment_date": "2026-03-27",
-        "appointment_time": "10:00",
+        "appointment_time": "08:30",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -39,7 +39,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.59,
         "appointment_date": "2026-03-27",
-        "appointment_time": "15:30",
+        "appointment_time": "09:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -50,7 +50,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.63,
         "appointment_date": "2026-03-25",
-        "appointment_time": "13:30",
+        "appointment_time": "08:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -61,7 +61,7 @@ function App() {
         "past_no_shows": 5,
         "risk_score": 0.1,
         "appointment_date": "2026-03-27",
-        "appointment_time": "13:30",
+        "appointment_time": "09:30",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -72,7 +72,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.17,
         "appointment_date": "2026-03-26",
-        "appointment_time": "09:00",
+        "appointment_time": "08:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -83,7 +83,7 @@ function App() {
         "past_no_shows": 5,
         "risk_score": 0.75,
         "appointment_date": "2026-03-24",
-        "appointment_time": "17:00",
+        "appointment_time": "08:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -94,7 +94,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.62,
         "appointment_date": "2026-03-27",
-        "appointment_time": "17:00",
+        "appointment_time": "10:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -105,7 +105,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.24,
         "appointment_date": "2026-03-26",
-        "appointment_time": "14:00",
+        "appointment_time": "09:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -116,7 +116,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.68,
         "appointment_date": "2026-03-27",
-        "appointment_time": "16:00",
+        "appointment_time": "11:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -127,7 +127,7 @@ function App() {
         "past_no_shows": 1,
         "risk_score": 0.12,
         "appointment_date": "2026-03-23",
-        "appointment_time": "18:00",
+        "appointment_time": "08:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -138,7 +138,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.35,
         "appointment_date": "2026-03-26",
-        "appointment_time": "17:30",
+        "appointment_time": "10:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -149,7 +149,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.62,
         "appointment_date": "2026-03-26",
-        "appointment_time": "10:00",
+        "appointment_time": "10:30",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -160,7 +160,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.87,
         "appointment_date": "2026-03-25",
-        "appointment_time": "13:30",
+        "appointment_time": "09:00",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -171,7 +171,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.11,
         "appointment_date": "2026-03-24",
-        "appointment_time": "09:30",
+        "appointment_time": "08:30",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -182,7 +182,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.55,
         "appointment_date": "2026-03-24",
-        "appointment_time": "17:00",
+        "appointment_time": "09:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -193,7 +193,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.76,
         "appointment_date": "2026-03-25",
-        "appointment_time": "08:00",
+        "appointment_time": "09:30",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -204,7 +204,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.61,
         "appointment_date": "2026-03-25",
-        "appointment_time": "09:00",
+        "appointment_time": "10:30",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -226,7 +226,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.36,
         "appointment_date": "2026-03-23",
-        "appointment_time": "14:00",
+        "appointment_time": "10:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -237,7 +237,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.24,
         "appointment_date": "2026-03-27",
-        "appointment_time": "15:00",
+        "appointment_time": "11:30",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -248,7 +248,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.77,
         "appointment_date": "2026-03-26",
-        "appointment_time": "11:30",
+        "appointment_time": "11:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -259,7 +259,7 @@ function App() {
         "past_no_shows": 5,
         "risk_score": 0.57,
         "appointment_date": "2026-03-24",
-        "appointment_time": "08:00",
+        "appointment_time": "10:00",
         "scan_type": "Long Scan",
         "duration": 60
     },
@@ -270,7 +270,7 @@ function App() {
         "past_no_shows": 2,
         "risk_score": 0.3,
         "appointment_date": "2026-03-27",
-        "appointment_time": "11:30",
+        "appointment_time": "12:30",
         "scan_type": "Quick Scan",
         "duration": 30
     },
@@ -281,7 +281,7 @@ function App() {
         "past_no_shows": 0,
         "risk_score": 0.07,
         "appointment_date": "2026-03-27",
-        "appointment_time": "11:00",
+        "appointment_time": "13:00",
         "scan_type": "Quick Scan",
         "duration": 30
     }
