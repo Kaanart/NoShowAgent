@@ -1,0 +1,87 @@
+:root {
+  /* Colors */
+  --primary: #135bec;
+  --primary-hover: #104abf;
+  --background-light: #f6f6f8;
+  --background-dark: #101622;
+  --text-dark: #0f172a; /* slate-900 */
+  --text-light: #f1f5f9; /* slate-100 */
+  --border-light: #f1f5f9; /* slate-100 */
+  --border-dark: #334155; /* slate-700 */
+  
+  /* Status Colors */
+  --status-high-risk: #ef4444; /* red-500 */
+  --status-high-risk-bg: #fef2f2; /* red-50 */
+  --status-medium-risk: #fb923c; /* orange-400 */
+  --status-medium-risk-bg: #fff7ed; /* orange-50 */
+  --status-low-risk: #22c55e; /* green-500 */
+  --status-low-risk-bg: #f0fdf4; /* green-50 */
+
+  /* Typography */
+  --font-display: 'Public Sans', sans-serif;
+  
+  /* Border Radius */
+  --border-radius-base: 0.25rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 0.75rem;
+  --border-radius-full: 9999px;
+}
+
+body {
+  font-family: var(--font-display);
+  background-color: var(--background-light);
+  color: var(--text-dark);
+}
+
+/* Button Component Styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border-radius: var(--border-radius-base);
+  transition: background-color 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-secondary {
+  background-color: white;
+  color: var(--text-dark);
+  border-color: #e2e8f0; /* slate-200 */
+}
+
+.btn-secondary:hover {
+  background-color: #f8fafc; /* slate-50 */
+}
+
+.btn-danger {
+  background-color: var(--status-high-risk);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: #dc2626; /* red-600 */
+}
+
+/* Card Component Styles */
+.card {
+  background-color: white;
+  border-radius: var(--border-radius-xl);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
