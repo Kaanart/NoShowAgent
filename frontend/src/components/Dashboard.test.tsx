@@ -23,9 +23,18 @@ const mockAppointments = [
   },
 ];
 
-test('renders dashboard with appointments', () => {
+test('renders dashboard with summary metrics and calendar', () => {
   render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
-  expect(screen.getByText(/Risk Dashboard/i)).toBeInTheDocument();
+  
+  // New heading
+  expect(screen.getByText(/One-Week Outlook/i)).toBeInTheDocument();
+  
+  // Summary Metrics
+  expect(screen.getByText(/No-Show Risk/i)).toBeInTheDocument();
+  expect(screen.getByText(/Slots to Backfill/i)).toBeInTheDocument();
+  expect(screen.getByText(/Utilization/i)).toBeInTheDocument();
+
+  // Calendar components still exist
   expect(screen.getByText(/ID: 1/i)).toBeInTheDocument();
   expect(screen.getByText(/ID: 2/i)).toBeInTheDocument();
   expect(screen.getByText(/Risk: 80%/i)).toBeInTheDocument();
