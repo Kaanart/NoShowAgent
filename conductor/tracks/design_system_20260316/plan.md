@@ -1,9 +1,9 @@
 # Implementation Plan
 
 ## Phase 1: Global Design Tokens & Base Components
-- [ ] Task: Extract and implement global design tokens
-    - [ ] Write Tests for custom UI components (e.g., Button, Card)
-    - [ ] Implement Feature: Create `design-tokens.css` and base reusable UI components from static handoff
+- [x] Task: Extract and implement global design tokens
+    - [x] Write Tests for custom UI components (e.g., Button, Card) (924197e)
+    - [x] Implement Feature: Create `design-tokens.css` and base reusable UI components from static handoff (924197e)
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Global Design Tokens & Base Components' (Protocol in workflow.md)
 
 ## Phase 2: Redesign Risk Dashboard & Calendar View
