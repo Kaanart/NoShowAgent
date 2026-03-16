@@ -6,7 +6,7 @@ This plan outlines the phases and tasks required to build the MVP.
 
 - [x] **Task:** Set up Google BigQuery instance and define the schema for patient and appointment data.
 - [x] **Task:** Write a data loading script to ingest the existing anonymized dataset into BigQuery.
-- [ ] **Task:** Develop a Python script for data exploration, cleaning, and feature engineering.
+- [x] **Task:** Develop a Python script for data exploration, cleaning, and feature engineering.
 - [ ] **Task:** Write Tests for the data processing script.
 - [ ] **Task:** Train an initial version of the no-show prediction model (e.g., Logistic Regression) using Scikit-learn.
 - [ ] **Task:** Write tests to evaluate the model's performance (e.g., accuracy, precision, recall).
