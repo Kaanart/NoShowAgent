@@ -11,7 +11,7 @@
 
 .calendar-header-row {
   display: grid;
-  grid-template-columns: 60px repeat(7, 1fr);
+  grid-template-columns: 60px repeat(5, 1fr);
   background-color: #fff;
   border-bottom: 1px solid #dadce0;
 }
@@ -29,7 +29,7 @@
 
 .calendar-grid {
   display: grid;
-  grid-template-columns: 60px repeat(7, 1fr);
+  grid-template-columns: 60px repeat(5, 1fr);
   flex-grow: 1;
   overflow-y: auto;
   position: relative;

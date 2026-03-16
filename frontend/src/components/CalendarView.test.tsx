@@ -13,13 +13,17 @@ const mockAppointments = [
   },
 ];
 
-test('renders calendar with days of the week', () => {
+test('renders calendar with weekdays only', () => {
   render(<CalendarView appointments={mockAppointments} onPromote={() => {}} />);
   expect(screen.getByText(/Monday/i)).toBeInTheDocument();
   expect(screen.getByText(/Tuesday/i)).toBeInTheDocument();
   expect(screen.getByText(/Wednesday/i)).toBeInTheDocument();
   expect(screen.getByText(/Thursday/i)).toBeInTheDocument();
   expect(screen.getByText(/Friday/i)).toBeInTheDocument();
+  
+  // Weekends should not be present
+  expect(screen.queryByText(/Saturday/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Sunday/i)).not.toBeInTheDocument();
 });
 
 test('renders appointment in the calendar', () => {
