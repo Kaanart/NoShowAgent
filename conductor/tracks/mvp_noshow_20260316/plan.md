@@ -21,7 +21,7 @@ This plan outlines the phases and tasks required to build the MVP.
     - [x] Sub-task: This API will fetch appointment data from BigQuery.
     - [x] Sub-task: It will call the model API to get predictions.
     - [x] Sub-task: It will format the data for the dashboard.
-- [ ] **Task:** Write integration tests for the backend API.
+- [x] **Task:** Write integration tests for the backend API.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 2: Backend and API Development' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Dashboard
