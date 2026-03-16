@@ -23,7 +23,7 @@ const mockAppointments = [
   },
 ];
 
-test('renders dashboard with summary metrics and calendar', () => {
+test('renders dashboard with summary metrics and redesigned table', () => {
   render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
   
   // New heading
@@ -34,10 +34,18 @@ test('renders dashboard with summary metrics and calendar', () => {
   expect(screen.getByText(/Slots to Backfill/i)).toBeInTheDocument();
   expect(screen.getByText(/Utilization/i)).toBeInTheDocument();
 
-  // Calendar components still exist (now as table rows)
-  expect(screen.getByText('1')).toBeInTheDocument();
-  expect(screen.getByText('2')).toBeInTheDocument();
-  expect(screen.getByText(/80%/i)).toBeInTheDocument();
+  // New column headers
+  const riskHeaders = screen.getAllByText(/RISK/i);
+  expect(riskHeaders.length).toBeGreaterThan(0);
+  expect(screen.getByText(/PATIENT NAME/i)).toBeInTheDocument();
+  expect(screen.getByText(/SCAN TYPE/i)).toBeInTheDocument();
+  expect(screen.getByText(/DATE & TIME/i)).toBeInTheDocument();
+  expect(screen.getByText(/PREDICTION SCORE/i)).toBeInTheDocument();
+
+  // Row content
+  expect(screen.getByText('John Doe')).toBeInTheDocument();
+  expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+  expect(screen.getAllByText(/80%/i).length).toBeGreaterThan(0);
 });
 
 test('renders Find a Backup button only for high-risk appointments', () => {
