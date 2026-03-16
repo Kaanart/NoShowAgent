@@ -125,13 +125,13 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, onViewCa
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>One Day Outlook</h2>
                 <p style={{ color: '#5f6368', fontSize: '0.875rem', margin: '0.25rem 0 0 0' }}>Manage upcoming appointments and no-show risks.</p>
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'stretch' }}>
                 <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', border: '1px solid #dadce0', borderRadius: '8px', padding: '0 0.5rem' }}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#5f6368', marginRight: '4px' }}>filter_list</span>
                     <select 
                         value={riskFilter} 
                         onChange={(e) => setRiskFilter(e.target.value as any)}
-                        style={{ border: 'none', padding: '0.5rem', fontSize: '0.875rem', color: '#3c4043', outline: 'none', cursor: 'pointer', backgroundColor: 'transparent' }}
+                        style={{ border: 'none', padding: '0.5rem 0', fontSize: '0.875rem', color: '#3c4043', outline: 'none', cursor: 'pointer', backgroundColor: 'transparent', height: '100%' }}
                     >
                         <option value="All">All Risks</option>
                         <option value="High">High Risk (&gt;70%)</option>
@@ -139,7 +139,7 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, onViewCa
                         <option value="Low">Low Risk (&lt;40%)</option>
                     </select>
                 </div>
-                <Button variant="primary" style={{ borderRadius: '8px', padding: '0.5rem 1rem' }} onClick={onViewCalendar}>
+                <Button variant="primary" style={{ borderRadius: '8px', padding: '0.5rem 1rem', display: 'flex', alignItems: 'center' }} onClick={onViewCalendar}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px', marginRight: '4px' }}>calendar_month</span>
                     View Calendar
                 </Button>
