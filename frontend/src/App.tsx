@@ -295,7 +295,11 @@ function App() {
   const renderContent = () => {
     if (currentView === 'Dashboard') {
       return (
-        <Dashboard appointments={appointments} onPromote={handlePromote} />
+        <Dashboard 
+          appointments={appointments} 
+          onPromote={handlePromote} 
+          onViewCalendar={() => setCurrentView('Schedule')}
+        />
       );
     } else if (currentView === 'Schedule') {
       return (

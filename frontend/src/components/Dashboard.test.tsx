@@ -24,7 +24,7 @@ const mockAppointments = [
 ];
 
 test('renders dashboard with summary metrics and redesigned table', () => {
-  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
+  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} onViewCalendar={() => {}} />);
   
   // New heading
   expect(screen.getByText(/One Day Outlook/i)).toBeInTheDocument();
@@ -51,7 +51,7 @@ test('renders dashboard with summary metrics and redesigned table', () => {
 });
 
 test('renders Find a Backup button only for high-risk appointments', () => {
-  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
+  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} onViewCalendar={() => {}} />);
   const promoteButtons = screen.getAllByText(/Find a Backup/i);
   
   // Appt ID 2 is high risk (0.8), Appt ID 1 is low risk (0.1)

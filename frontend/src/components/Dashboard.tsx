@@ -17,11 +17,13 @@ interface Appointment {
 interface DashboardProps {
   appointments: Appointment[];
   onPromote: (appointmentId: number) => void;
+  onViewCalendar: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
+const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, onViewCalendar }) => {
   const uniqueDates = Array.from(new Set(appointments.map(a => a.appointment_date))).sort();
   const [selectedDate, setSelectedDate] = useState<string>(uniqueDates[0] || '');
+  const [riskFilter, setRiskFilter] = useState<'All' | 'High' | 'Medium' | 'Low'>('All');
 
   useEffect(() => {
     if (uniqueDates.length > 0 && (!selectedDate || !uniqueDates.includes(selectedDate))) {
@@ -29,7 +31,16 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
     }
   }, [appointments, selectedDate]);
 
-  const filteredAppointments = appointments.filter(a => a.appointment_date === selectedDate);
+  let filteredAppointments = appointments.filter(a => a.appointment_date === selectedDate);
+  
+  if (riskFilter !== 'All') {
+    filteredAppointments = filteredAppointments.filter(appt => {
+      if (riskFilter === 'High') return appt.risk_score > 0.7;
+      if (riskFilter === 'Medium') return appt.risk_score > 0.4 && appt.risk_score <= 0.7;
+      if (riskFilter === 'Low') return appt.risk_score <= 0.4;
+      return true;
+    });
+  }
 
   const formatDay = (dateString: string) => {
     if (!dateString) return '';
@@ -114,12 +125,21 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
                 <h2 style={{ fontSize: '1.25rem', fontWeight: 700, margin: 0 }}>One Day Outlook</h2>
                 <p style={{ color: '#5f6368', fontSize: '0.875rem', margin: '0.25rem 0 0 0' }}>Manage upcoming appointments and no-show risks.</p>
             </div>
-            <div style={{ display: 'flex', gap: '0.5rem' }}>
-                <Button variant="secondary" style={{ borderRadius: '8px', padding: '0.5rem 1rem' }}>
-                    <span className="material-symbols-outlined" style={{ fontSize: '18px', marginRight: '4px' }}>filter_list</span>
-                    Filter
-                </Button>
-                <Button variant="primary" style={{ borderRadius: '8px', padding: '0.5rem 1rem' }}>
+            <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                <div style={{ display: 'flex', alignItems: 'center', backgroundColor: 'white', border: '1px solid #dadce0', borderRadius: '8px', padding: '0 0.5rem' }}>
+                    <span className="material-symbols-outlined" style={{ fontSize: '18px', color: '#5f6368', marginRight: '4px' }}>filter_list</span>
+                    <select 
+                        value={riskFilter} 
+                        onChange={(e) => setRiskFilter(e.target.value as any)}
+                        style={{ border: 'none', padding: '0.5rem', fontSize: '0.875rem', color: '#3c4043', outline: 'none', cursor: 'pointer', backgroundColor: 'transparent' }}
+                    >
+                        <option value="All">All Risks</option>
+                        <option value="High">High Risk (&gt;70%)</option>
+                        <option value="Medium">Medium Risk (40-70%)</option>
+                        <option value="Low">Low Risk (&lt;40%)</option>
+                    </select>
+                </div>
+                <Button variant="primary" style={{ borderRadius: '8px', padding: '0.5rem 1rem' }} onClick={onViewCalendar}>
                     <span className="material-symbols-outlined" style={{ fontSize: '18px', marginRight: '4px' }}>calendar_month</span>
                     View Calendar
                 </Button>
