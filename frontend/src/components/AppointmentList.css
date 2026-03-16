@@ -1,0 +1,31 @@
+.appointment-list-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.appointment-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.appointment-table th,
+.appointment-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
+}
+
+.appointment-table th {
+  background-color: #f4f4f4;
+}
+
+.loading, .error {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+.error {
+  color: red;
+}

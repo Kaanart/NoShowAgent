@@ -4,5 +4,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-- [ ] **Track: Develop MVP for No-Show Prediction and Backup Suggestion**
+- [~] **Track: Develop MVP for No-Show Prediction and Backup Suggestion**
   *Link: [./tracks/mvp_noshow_20260316/](./tracks/mvp_noshow_20260316/)*

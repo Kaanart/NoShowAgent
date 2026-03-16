@@ -26,10 +26,10 @@ This plan outlines the phases and tasks required to build the MVP.
 
 ## Phase 3: Frontend Dashboard
 
-- [ ] **Task:** Set up a new React application using Create React App.
-- [ ] **Task:** Create a component to display the list of upcoming appointments.
-    - [ ] Sub-task: The component should fetch data from the backend API.
-- [ ] **Task:** Write tests for the appointment list component.
+- [x] **Task:** Set up a new React application using Create React App.
+- [x] **Task:** Create a component to display the list of upcoming appointments.
+    - [x] Sub-task: The component should fetch data from the backend API.
+- [x] **Task:** Write tests for the appointment list component.
 - [ ] **Task:** Implement the color-coding for the no-show probability score.
 - [ ] **Task:** Add the "Find Backup" button to high-risk appointments.
 - [ ] **Task:** Create a modal or panel to display the backup patient suggestions returned by the ADK agent.
