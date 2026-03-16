@@ -7,9 +7,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Waitlist Endpoints' (Protocol in workflow.md)
 
 ## Phase 2: Waitlist Auto-Promote Logic
-- [ ] Task: Develop auto-promote workflow
-    - [ ] Write Tests for auto-promote logic
-    - [ ] Implement Feature for auto-promoting waitlisted patients
+- [x] Task: Develop auto-promote workflow
+    - [x] Write Tests for auto-promote logic (4ec3209)
+    - [x] Implement Feature for auto-promoting waitlisted patients (4ec3209)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Waitlist Auto-Promote Logic' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Waitlist Integration
