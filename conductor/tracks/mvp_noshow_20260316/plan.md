@@ -17,10 +17,10 @@ This plan outlines the phases and tasks required to build the MVP.
 - [x] **Task:** Create a Google Cloud Function in Python to serve the trained model as an API.
     - [x] Sub-task: The function should accept appointment data and return a no-show probability.
 - [x] **Task:** Write unit tests for the model deployment API.
-- [ ] **Task:** Create a second Cloud Function to act as the main backend API for the frontend.
-    - [ ] Sub-task: This API will fetch appointment data from BigQuery.
-    - [ ] Sub-task: It will call the model API to get predictions.
-    - [ ] Sub-task: It will format the data for the dashboard.
+- [x] **Task:** Create a second Cloud Function to act as the main backend API for the frontend.
+    - [x] Sub-task: This API will fetch appointment data from BigQuery.
+    - [x] Sub-task: It will call the model API to get predictions.
+    - [x] Sub-task: It will format the data for the dashboard.
 - [ ] **Task:** Write integration tests for the backend API.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 2: Backend and API Development' (Protocol in workflow.md)
 
