@@ -1,10 +1,10 @@
 # Implementation Plan
 
-## Phase 1: Backend Waitlist Endpoints
+## Phase 1: Backend Waitlist Endpoints [checkpoint: 2170bb6]
 - [x] Task: Implement endpoints for waitlisted patients
     - [x] Write Tests for waitlist retrieval logic (658d93e)
     - [x] Implement Feature for waitlist API endpoints (658d93e)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Waitlist Endpoints' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Waitlist Endpoints' (Protocol in workflow.md)
 
 ## Phase 2: Waitlist Auto-Promote Logic
 - [ ] Task: Develop auto-promote workflow
