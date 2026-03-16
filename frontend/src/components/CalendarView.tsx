@@ -43,6 +43,13 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
     return (parseInt(h, 10) - 8) * 60 + parseInt(m, 10);
   };
 
+  // Content-aware duration for overlap checking
+  const getVisualDuration = (appt: Appointment) => {
+    const duration = appt.duration || 60;
+    // An appointment needs at least ~85px of vertical space to display its content fully without clipping.
+    return Math.max(duration, 85);
+  };
+
   const getLayoutStyles = (dayAppts: Appointment[]) => {
     const sorted = [...dayAppts].sort((a, b) => getMinutes(a.appointment_time) - getMinutes(b.appointment_time));
     const positions: { [id: number]: React.CSSProperties } = {};
@@ -54,13 +61,15 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
     // Group overlapping appointments
     for (const appt of sorted) {
         const start = getMinutes(appt.appointment_time);
+        const visualDuration = getVisualDuration(appt);
+        
         if (start >= lastEnd) {
             if (group.length > 0) groups.push(group);
             group = [appt];
         } else {
             group.push(appt);
         }
-        lastEnd = Math.max(lastEnd, start + (appt.duration || 60));
+        lastEnd = Math.max(lastEnd, start + visualDuration);
     }
     if (group.length > 0) groups.push(group);
     
@@ -72,7 +81,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
             let placed = false;
             for (const col of groupCols) {
                 const lastAppt = col[col.length - 1];
-                const lastApptEnd = getMinutes(lastAppt.appointment_time) + (lastAppt.duration || 60);
+                const lastApptEnd = getMinutes(lastAppt.appointment_time) + getVisualDuration(lastAppt);
                 if (lastApptEnd <= start) {
                     col.push(appt);
                     placed = true;

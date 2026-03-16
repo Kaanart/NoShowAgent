@@ -58,6 +58,7 @@
 }
 
 .appointment-slot {
+  box-sizing: border-box;
   position: absolute;
   left: 4px;
   right: 4px;
