@@ -34,7 +34,7 @@ This plan outlines the phases and tasks required to build the MVP.
 - [x] **Task:** Add the "Find Backup" button to high-risk appointments.
 - [x] **Task:** Create a modal or panel to display the backup patient suggestions returned by the ADK agent.
 - [x] **Task:** Write tests for the backup suggestion UI.
-- [ ] **Task:** Conductor - User Manual Verification 'Phase 3: Frontend Dashboard' (Protocol in workflow.md)
+- [x] **Task:** Conductor - User Manual Verification 'Phase 3: Frontend Dashboard' (Protocol in workflow.md)
 
 ## Phase 4: ADK Agent Integration
 
@@ -45,4 +45,4 @@ This plan outlines the phases and tasks required to build the MVP.
 - [x] **Task:** Write tests for the backup patient agent.
 - [x] **Task:** Integrate the agent with the frontend so that the "Find Backup" button triggers the agent.
 - [x] **Task:** Write end-to-end tests for the full workflow.
-- [ ] **Task:** Conductor - User Manual Verification 'Phase 4: ADK Agent Integration' (Protocol in workflow.md)
+- [x] **Task:** Conductor - User Manual Verification 'Phase 4: ADK Agent Integration' (Protocol in workflow.md)
