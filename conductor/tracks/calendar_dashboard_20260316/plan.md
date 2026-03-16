@@ -6,11 +6,11 @@
     - [x] Implement Feature to return next week's scheduled appointments with timestamps (ea96244)
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Data Updates' (Protocol in workflow.md)
 
-## Phase 2: Frontend Calendar Integration
+## Phase 2: Frontend Calendar Integration [checkpoint: 089bffc]
 - [x] Task: Build calendar view components
     - [x] Write Tests for calendar rendering and appointment placement (1a3ec84)
     - [x] Implement Feature: React calendar UI for the Risk Dashboard replacing the table (1a3ec84)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Frontend Calendar Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Frontend Calendar Integration' (Protocol in workflow.md)
 
 ## Phase 3: Refinement and Styling
 - [ ] Task: Enhance calendar UX and styling
