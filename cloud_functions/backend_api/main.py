@@ -133,19 +133,39 @@ def get_dashboard_data(request):
             raw_appointments = get_appointments_from_bq(limit)
         except Exception as bq_err:
             print(f"BigQuery fetch failed: {bq_err}. Falling back to mock data for testing.")
-            # Fallback to mock data if BQ fails (useful for local testing before deployment)
-            raw_appointments = [
-                {
-                    "appointment_id": "A101", "patient_id": "P202", "appointment_datetime": "2026-03-25T10:00:00Z",
-                    "clinic_id": "C01", "provider_id": "DR01", "appointment_type": "Checkup", "status": "Scheduled",
-                    "age": 45, "gender": "M", "distance_to_clinic": 12.5, "historical_no_show_rate": 0.8
-                },
-                {
-                     "appointment_id": "A102", "patient_id": "P203", "appointment_datetime": "2026-03-25T11:00:00Z",
-                    "clinic_id": "C01", "provider_id": "DR02", "appointment_type": "Follow-up", "status": "Scheduled",
-                    "age": 30, "gender": "F", "distance_to_clinic": 2.5, "historical_no_show_rate": 0.1
-                }
-            ]
+            # Generate a rich set of mock data for the current week
+            raw_appointments = []
+            days_to_add = [0, 1, 2, 3, 4] # Mon - Fri
+            hours_to_add = [8, 9, 10, 11, 13, 14, 15, 16]
+            
+            # Start of this week (Monday, March 16, 2026)
+            base_date = datetime.date(2026, 3, 16)
+            
+            import random
+            appt_types = ["Checkup", "Follow-up", "Consultation", "MRI Scan", "Bloodwork", "Therapy"]
+            providers = ["DR01", "DR02", "DR03", "DR04"]
+            
+            for day_offset in days_to_add:
+                # Add 3-5 random appointments per day
+                daily_hours = random.sample(hours_to_add, random.randint(4, 6))
+                for hour in daily_hours:
+                    appt_date = base_date + datetime.timedelta(days=day_offset)
+                    appt_dt = datetime.datetime.combine(appt_date, datetime.time(hour, 0))
+                    
+                    patient_id = f"P{random.randint(100, 999)}"
+                    raw_appointments.append({
+                        "appointment_id": f"A{random.randint(1000, 9999)}",
+                        "patient_id": patient_id,
+                        "appointment_datetime": appt_dt.isoformat() + "Z",
+                        "clinic_id": "C01",
+                        "provider_id": random.choice(providers),
+                        "appointment_type": random.choice(appt_types),
+                        "status": "Scheduled",
+                        "age": random.randint(18, 85),
+                        "gender": random.choice(["M", "F"]),
+                        "distance_to_clinic": round(random.uniform(0.5, 20.0), 1),
+                        "historical_no_show_rate": round(random.uniform(0.0, 1.0), 2)
+                    })
 
         dashboard_data = []
 
@@ -153,6 +173,13 @@ def get_dashboard_data(request):
         for appt in raw_appointments:
             # Get prediction
             prediction = call_model_api(appt)
+            
+            # If the model API is not running, it returns an error and 0.0 probability.
+            # We'll intercept that and use the mock historical_no_show_rate instead.
+            if prediction.get('probability') == 0.0 and 'error' in prediction:
+                prob = appt.get('historical_no_show_rate', 0.5)
+                risk = "High" if prob > 0.7 else "Medium" if prob > 0.3 else "Low"
+                prediction = {"probability": prob, "risk_level": risk}
             
             # Format the output
             # Convert datetime to string if it's an object

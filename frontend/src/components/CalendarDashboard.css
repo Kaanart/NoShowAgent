@@ -1,0 +1,153 @@
+.calendar-wrapper {
+  padding: 15px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.calendar-header-title {
+  margin-bottom: 12px;
+}
+
+.calendar-header-title h2 {
+  margin: 0 0 4px 0;
+  color: #2c3e50;
+  font-size: 1.4rem;
+}
+
+.calendar-header-title p {
+  margin: 0;
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  grid-template-rows: 40px repeat(10, 1fr); /* 1 header row + 10 hour rows */
+  background-color: #ecf0f1;
+  border: 1px solid #ecf0f1;
+  border-radius: 8px;
+  overflow: hidden;
+  gap: 1px;
+  flex: 1; /* Fills remaining height */
+}
+
+/* Base style for all grid items */
+.calendar-grid > div {
+  background-color: #ffffff;
+  min-height: 0; /* Important for flex/grid shrinking */
+}
+
+.grid-header-corner {
+  font-weight: bold;
+  color: #7f8c8d;
+  background-color: #f8f9fa !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+.grid-header-day {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #34495e;
+  background-color: #f8f9fa !important;
+  font-size: 0.9rem;
+}
+
+.grid-time-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 8px;
+  color: #7f8c8d;
+  font-size: 0.75rem;
+  background-color: #f8f9fa !important;
+  border-right: 1px solid #ecf0f1;
+}
+
+.grid-cell {
+  padding: 3px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Appointment Card Styles */
+.appt-card {
+  height: 100%;
+  border-radius: 4px;
+  padding: 4px 6px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 3px solid;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+.low-risk {
+  background-color: #e8f5e9;
+  border-color: #4caf50;
+}
+.low-risk .appt-risk { color: #2e7d32; }
+
+.med-risk {
+  background-color: #fff8e1;
+  border-color: #ffb300;
+}
+.med-risk .appt-risk { color: #f57f17; }
+
+.high-risk {
+  background-color: #ffebee;
+  border-color: #f44336;
+}
+.high-risk .appt-risk { color: #c62828; }
+
+.appt-patient {
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: #2c3e50;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.appt-type {
+  font-size: 0.65rem;
+  color: #555;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.appt-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2px;
+}
+
+.appt-risk {
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.find-backup-btn {
+  background-color: #d32f2f;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 4px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  cursor: pointer;
+}
