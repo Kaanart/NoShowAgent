@@ -12,8 +12,8 @@
     - [x] Implement Feature: Refactor `CalendarView` to only render a 5-day week (36fac63)
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Calendar View Modification' (Protocol in workflow.md)
 
-## Phase 3: Main Layout Integration
+## Phase 3: Main Layout Integration [checkpoint: 372c51f]
 - [x] Task: Integrate Sidebar and routing state into App
     - [x] Write Tests to verify state changes render different components ("Daily Dashboard" vs "Schedule") (1ef5c00)
     - [x] Implement Feature: Update `App.tsx` layout with CSS grid/flexbox to hold the `Sidebar` and main content area (1ef5c00)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Main Layout Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Main Layout Integration' (Protocol in workflow.md)
