@@ -7,9 +7,9 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Sidebar Layout & State Management' (Protocol in workflow.md)
 
 ## Phase 2: Calendar View Modification
-- [ ] Task: Update Calendar View to weekdays only
-    - [~] Write Tests to verify Saturday and Sunday are excluded from the calendar grid
-    - [ ] Implement Feature: Refactor `CalendarView` to only render a 5-day week
+- [x] Task: Update Calendar View to weekdays only
+    - [x] Write Tests to verify Saturday and Sunday are excluded from the calendar grid (36fac63)
+    - [x] Implement Feature: Refactor `CalendarView` to only render a 5-day week (36fac63)
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Calendar View Modification' (Protocol in workflow.md)
 
 ## Phase 3: Main Layout Integration
