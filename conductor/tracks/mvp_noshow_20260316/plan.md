@@ -38,11 +38,11 @@ This plan outlines the phases and tasks required to build the MVP.
 
 ## Phase 4: ADK Agent Integration
 
-- [ ] **Task:** Design the ADK agent responsible for finding backup patients.
-- [ ] **Task:** Implement the agent in Python.
-    - [ ] Sub-task: The agent will query the waitlist in BigQuery.
-    - [ ] Sub-task: It will apply filtering logic to find suitable candidates.
-- [ ] **Task:** Write tests for the backup patient agent.
-- [ ] **Task:** Integrate the agent with the frontend so that the "Find Backup" button triggers the agent.
-- [ ] **Task:** Write end-to-end tests for the full workflow.
+- [x] **Task:** Design the ADK agent responsible for finding backup patients.
+- [x] **Task:** Implement the agent in Python.
+    - [x] Sub-task: The agent will query the waitlist in BigQuery.
+    - [x] Sub-task: It will apply filtering logic to find suitable candidates.
+- [x] **Task:** Write tests for the backup patient agent.
+- [x] **Task:** Integrate the agent with the frontend so that the "Find Backup" button triggers the agent.
+- [x] **Task:** Write end-to-end tests for the full workflow.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 4: ADK Agent Integration' (Protocol in workflow.md)

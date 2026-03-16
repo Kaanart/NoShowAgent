@@ -12,7 +12,7 @@ const AppointmentList = () => {
     const fetchAppointments = async () => {
       try {
         // Fetching from backend API (defaulting to localhost or mock environment)
-        const response = await fetch(process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/api/dashboard');
+        const response = await fetch(process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/');
         
         if (!response.ok) {
           throw new Error('Failed to fetch appointments');

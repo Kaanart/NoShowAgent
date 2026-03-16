@@ -5,6 +5,7 @@ import requests
 import pandas as pd
 from flask import jsonify
 import datetime
+from backup_agent import BackupPatientAgent
 
 # Setup BigQuery Client
 # Ensure GOOGLE_APPLICATION_CREDENTIALS is set in the environment or function is deployed with correct service account
@@ -98,8 +99,31 @@ def call_model_api(appointment_data):
 @functions_framework.http
 def get_dashboard_data(request):
     """
-    HTTP Cloud Function to fetch appointments, get predictions, and format data for the frontend.
+    HTTP Cloud Function to route requests for appointments or finding backups.
     """
+    # Set CORS headers for the preflight request
+    if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'GET, POST',
+            'Access-Control-Allow-Headers': 'Content-Type',
+            'Access-Control-Max-Age': '3600'
+        }
+        return ('', 204, headers)
+
+    # Set CORS headers for the main request
+    cors_headers = {'Access-Control-Allow-Origin': '*'}
+
+    # Router logic
+    if 'find-backup' in request.path:
+        try:
+            appt_id = request.args.get('appointmentId')
+            agent = BackupPatientAgent(bq_client)
+            suggestions = agent.find_backups(appt_id)
+            return jsonify({"suggestions": suggestions}), 200, cors_headers
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500, cors_headers
+
     try:
         # 1. Fetch upcoming appointments
         limit = request.args.get('limit', default=10, type=int)
@@ -155,7 +179,7 @@ def get_dashboard_data(request):
         return jsonify({
             "appointments": dashboard_data,
             "count": len(dashboard_data)
-        }), 200
+        }), 200, cors_headers
 
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": str(e)}), 500, cors_headers
