@@ -1,8 +1,13 @@
 import React, { useState } from 'react';
 import Dashboard from './components/Dashboard';
 import Waitlist from './components/Waitlist';
+import Sidebar from './components/Sidebar';
+import './App.css';
 
 function App() {
+  const [currentView, setCurrentView] = useState('Dashboard');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
   const [appointments] = useState([
     { 
       id: 1, 
@@ -33,14 +38,57 @@ function App() {
     console.log(`Promoting patient to appointment ${appointmentId}`);
   };
 
+  const renderContent = () => {
+    if (currentView === 'Dashboard') {
+      return (
+        <>
+          <Dashboard appointments={appointments} onPromote={handlePromote} />
+          <Waitlist patients={waitlistPatients} />
+        </>
+      );
+    } else if (currentView === 'Schedule') {
+      return (
+        <div style={{ padding: '2rem', textAlign: 'center', color: 'var(--text-dark)' }}>
+          <h2>Schedule View Placeholder</h2>
+          <p>This is where the full schedule would go.</p>
+        </div>
+      );
+    }
+    return <div>View Not Found</div>;
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>MRI No-Show Prediction</h1>
-      </header>
-      <main>
-        <Dashboard appointments={appointments} onPromote={handlePromote} />
-        <Waitlist patients={waitlistPatients} />
+    <div className="app-layout">
+      <Sidebar 
+        currentView={currentView} 
+        onViewChange={(view) => {
+          setCurrentView(view);
+          setIsSidebarOpen(false); // Close on mobile after selection
+        }} 
+        isOpen={isSidebarOpen} 
+      />
+      
+      <main className="main-content">
+        <header className="top-header">
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <button className="mobile-menu-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              <span className="material-symbols-outlined">menu</span>
+            </button>
+            <h1 className="header-title">MRI Lab Scheduling Dashboard</h1>
+          </div>
+          <div className="header-actions">
+            <button className="icon-btn">
+              <span className="material-symbols-outlined">notifications</span>
+            </button>
+            <button className="icon-btn">
+              <span className="material-symbols-outlined">help</span>
+            </button>
+          </div>
+        </header>
+        
+        <div className="scrollable-area">
+          {renderContent()}
+        </div>
       </main>
     </div>
   );
