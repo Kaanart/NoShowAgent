@@ -12,11 +12,28 @@ risk_engine = RiskEngine()
 def health_check():
     return {"status": "ok"}
 
+from datetime import datetime, timedelta
+
 @app.post("/predict")
 def predict_no_show(appointments: List[dict]):
     """
     Receives a list of appointments and returns them ranked by no-show risk.
+    If appointments is empty, returns mock data for the next week.
     """
+    if not appointments:
+        # Generate mock data for the next 7 days
+        today = datetime.now()
+        for i in range(1, 8):
+            day = today + timedelta(days=i)
+            appointments.append({
+                "id": 100 + i,
+                "patient_name": f"Patient {i}",
+                "age": 20 + (i * 5),
+                "past_no_shows": i % 3,
+                "appointment_date": day.strftime("%Y-%m-%d"),
+                "appointment_time": f"{9 + (i % 8)}:00"
+            })
+
     ranked_appointments = risk_engine.rank_appointments(appointments)
     return ranked_appointments
 
