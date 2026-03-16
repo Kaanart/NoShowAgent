@@ -1,0 +1,100 @@
+.calendar-container {
+  display: flex;
+  flex-direction: column;
+  height: 600px;
+  border: 1px solid #dadce0;
+  border-radius: 8px;
+  overflow: hidden;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #3c4043;
+}
+
+.calendar-header-row {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  background-color: #fff;
+  border-bottom: 1px solid #dadce0;
+}
+
+.time-gutter-header {
+  border-right: 1px solid #dadce0;
+}
+
+.day-header {
+  padding: 10px;
+  text-align: center;
+  border-right: 1px solid #dadce0;
+  font-size: 14px;
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: 60px repeat(7, 1fr);
+  flex-grow: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+.time-gutter {
+  border-right: 1px solid #dadce0;
+  background-color: #f1f3f4;
+}
+
+.time-label {
+  height: 60px;
+  font-size: 11px;
+  text-align: right;
+  padding-right: 8px;
+  color: #70757a;
+  position: relative;
+  top: -6px;
+}
+
+.day-column {
+  border-right: 1px solid #dadce0;
+  position: relative;
+  background-image: linear-gradient(#dadce0 1px, transparent 1px);
+  background-size: 100% 60px;
+}
+
+.appointment-slot {
+  position: absolute;
+  left: 4px;
+  right: 4px;
+  background-color: #e8f0fe;
+  border: 1px solid #1a73e8;
+  border-radius: 4px;
+  padding: 4px;
+  font-size: 12px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.appointment-slot.high-risk {
+  background-color: #fce8e6;
+  border-color: #d93025;
+}
+
+.appointment-title {
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+.appointment-time {
+  color: #5f6368;
+}
+
+.promote-btn {
+  background-color: #d93025;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.promote-btn:hover {
+  background-color: #b9251c;
+}
