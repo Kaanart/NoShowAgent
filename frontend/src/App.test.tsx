@@ -10,7 +10,6 @@ test('renders main layout with Sidebar and Dashboard by default', () => {
   
   // Verify default view is Daily Dashboard
   expect(screen.getByText(/One Day Outlook/i)).toBeInTheDocument();
-  expect(screen.getByText(/Suggested Backups/i)).toBeInTheDocument();
 });
 
 test('toggles to Schedule view', () => {

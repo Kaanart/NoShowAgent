@@ -8,6 +8,8 @@ interface Appointment {
   risk_score: number;
   appointment_date: string;
   appointment_time: string;
+  scan_type?: string;
+  duration?: number;
 }
 
 interface CalendarViewProps {
@@ -20,14 +22,18 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
   const hours = Array.from({ length: 12 }, (_, i) => i + 8); // 8 AM to 7 PM
 
   // Helper to calculate position
-  const getAppointmentStyle = (time: string) => {
-    const [hourStr, minuteStr] = time.split(':');
+  const getAppointmentStyle = (appt: Appointment) => {
+    const [hourStr, minuteStr] = appt.appointment_time.split(':');
     const hour = parseInt(hourStr, 10);
     const minute = parseInt(minuteStr, 10);
     
     // Each hour is 60px high. Start at 8 AM.
     const top = (hour - 8) * 60 + (minute / 60) * 60;
-    return { top: `${top}px`, minHeight: '80px' };
+    
+    // Determine height based on duration, fallback to 60 minutes
+    const height = appt.duration ? appt.duration : 60;
+    
+    return { top: `${top}px`, minHeight: `${height}px` };
   };
 
   // Group appointments by day
@@ -67,10 +73,10 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
               <div 
                 key={appt.id} 
                 className={`appointment-slot ${appt.risk_score > 0.5 ? 'high-risk' : ''}`}
-                style={getAppointmentStyle(appt.appointment_time)}
+                style={getAppointmentStyle(appt)}
               >
                 <div className="appointment-title">{appt.patient_name} (ID: {appt.id})</div>
-                <div className="appointment-time">{appt.appointment_time}</div>
+                <div className="appointment-time">{appt.appointment_time} {appt.scan_type && `- ${appt.scan_type}`}</div>
                 <div>Risk: {Math.round(appt.risk_score * 100)}%</div>
                 {appt.risk_score > 0.5 && (
                   <button className="promote-btn" onClick={() => onPromote(appt.id)}>Find a Backup</button>

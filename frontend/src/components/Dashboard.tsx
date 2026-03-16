@@ -10,6 +10,8 @@ interface Appointment {
   risk_score: number;
   appointment_date: string;
   appointment_time: string;
+  scan_type?: string;
+  duration?: number;
 }
 
 interface DashboardProps {
@@ -74,6 +76,7 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
               <tr style={{ borderBottom: '1px solid var(--border-light)' }}>
                 <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>ID</th>
                 <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>Patient Name</th>
+                <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>Scan Type</th>
                 <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>Time</th>
                 <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>Risk</th>
                 <th style={{ padding: '1rem', color: 'var(--text-dark)', fontWeight: 600 }}>Action</th>
@@ -85,7 +88,10 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
                   <tr key={appt.id} style={{ borderBottom: '1px solid var(--border-light)' }}>
                     <td style={{ padding: '1rem' }}>{appt.id}</td>
                     <td style={{ padding: '1rem', fontWeight: 500 }}>{appt.patient_name}</td>
-                    <td style={{ padding: '1rem', color: 'var(--text-dark)' }}>{appt.appointment_time}</td>
+                    <td style={{ padding: '1rem', color: 'var(--text-dark)' }}>{appt.scan_type || 'N/A'}</td>
+                    <td style={{ padding: '1rem', color: 'var(--text-dark)' }}>
+                      {appt.appointment_time} {appt.duration ? `(${appt.duration} min)` : ''}
+                    </td>
                     <td style={{ padding: '1rem' }}>
                       <span style={{
                         padding: '0.25rem 0.5rem',
