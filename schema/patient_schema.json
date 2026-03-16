@@ -1,0 +1,8 @@
+[
+  {"name": "patient_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "age", "type": "INTEGER", "mode": "NULLABLE"},
+  {"name": "gender", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "distance_to_clinic", "type": "FLOAT", "mode": "NULLABLE"},
+  {"name": "historical_no_show_rate", "type": "FLOAT", "mode": "NULLABLE"},
+  {"name": "waitlist_status", "type": "BOOLEAN", "mode": "NULLABLE", "description": "Is patient on the backup waitlist"}
+]

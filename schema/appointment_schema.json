@@ -1,0 +1,10 @@
+[
+  {"name": "appointment_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "patient_id", "type": "STRING", "mode": "REQUIRED"},
+  {"name": "appointment_datetime", "type": "TIMESTAMP", "mode": "REQUIRED"},
+  {"name": "clinic_id", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "provider_id", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "appointment_type", "type": "STRING", "mode": "NULLABLE"},
+  {"name": "status", "type": "STRING", "mode": "REQUIRED", "description": "e.g., Scheduled, Cancelled, No-Show, Completed"},
+  {"name": "no_show", "type": "BOOLEAN", "mode": "NULLABLE", "description": "Target variable for historical data"}
+]
