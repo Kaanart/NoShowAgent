@@ -40,9 +40,9 @@ test('renders dashboard with summary metrics and calendar', () => {
   expect(screen.getByText(/80%/i)).toBeInTheDocument();
 });
 
-test('renders Auto-Promote button only for high-risk appointments', () => {
+test('renders Find a Backup button only for high-risk appointments', () => {
   render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
-  const promoteButtons = screen.getAllByText(/Auto-Promote/i);
+  const promoteButtons = screen.getAllByText(/Find a Backup/i);
   
   // Appt ID 2 is high risk (0.8), Appt ID 1 is low risk (0.1)
   // So there should be exactly one promote button.

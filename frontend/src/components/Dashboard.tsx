@@ -71,7 +71,7 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote }) => {
                   </td>
                   <td style={{ padding: '1rem' }}>
                     {appt.risk_score > 0.5 && (
-                      <Button variant="danger" onClick={() => onPromote(appt.id)}>Auto-Promote</Button>
+                      <Button variant="danger" onClick={() => onPromote(appt.id)}>Find a Backup</Button>
                     )}
                   </td>
                 </tr>

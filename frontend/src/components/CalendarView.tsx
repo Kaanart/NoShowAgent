@@ -27,7 +27,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
     
     // Each hour is 60px high. Start at 8 AM.
     const top = (hour - 8) * 60 + (minute / 60) * 60;
-    return { top: `${top}px`, height: '50px' };
+    return { top: `${top}px`, minHeight: '80px' };
   };
 
   // Group appointments by day
@@ -73,7 +73,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
                 <div className="appointment-time">{appt.appointment_time}</div>
                 <div>Risk: {Math.round(appt.risk_score * 100)}%</div>
                 {appt.risk_score > 0.5 && (
-                  <button className="promote-btn" onClick={() => onPromote(appt.id)}>Auto-Promote</button>
+                  <button className="promote-btn" onClick={() => onPromote(appt.id)}>Find a Backup</button>
                 )}
               </div>
             ))}
