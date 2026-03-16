@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Redesign Risk Dashboard & Calendar View' (Protocol in workflow.md)
 
 ## Phase 3: Redesign Waitlist Management Section
-- [ ] Task: Apply design system to the Waitlist table
-    - [~] Write Tests for structural changes to the Waitlist component
-    - [ ] Implement Feature: Refactor the React component to match the new layout and styling for urgency indicators
+- [x] Task: Apply design system to the Waitlist table
+    - [x] Write Tests for structural changes to the Waitlist component (81cbe3c)
+    - [x] Implement Feature: Refactor the React component to match the new layout and styling for urgency indicators (81cbe3c)
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Redesign Waitlist Management Section' (Protocol in workflow.md)
