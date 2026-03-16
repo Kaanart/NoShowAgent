@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Appointment Risk &amp; Backup Manager</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Public Sans', sans-serif;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+<!-- Header -->
+<div class="flex items-center bg-white dark:bg-slate-900 p-4 pb-2 justify-between sticky top-0 z-10 border-b border-slate-200 dark:border-slate-800">
+<a class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</a>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Slot Manager</h2>
+</div>
+<!-- Main Content Scrollable Area -->
+<div class="flex-1 overflow-y-auto pb-24">
+<!-- Patient Risk Overview -->
+<h1 class="text-slate-900 dark:text-slate-100 text-[22px] font-bold leading-tight tracking-[-0.015em] px-4 text-left pb-3 pt-5">Patient Risk Details</h1>
+<div class="bg-white dark:bg-slate-900 mx-4 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4 mb-6">
+<div class="flex gap-4 items-center justify-between mb-4 border-b border-slate-100 dark:border-slate-800 pb-4">
+<div class="flex items-center gap-4">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[60px] w-[60px]" data-alt="Portrait of John Doe, patient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQ1Adgh0e9a7CdJ4sLWBVAMV16eWIl3KYqx4gslGygt-nFs9lJiSYJo3r6Zoy1O72uklLXjR6TutD0sYJmDG-Kng-bmgMB2M20OoDNbUuovzZShnEFm5Vq-9I8R_w9akIt0LA7qmkHin9TLE-kP-9TTKjCICv2ekgnm-UbRj7yMKoau1zioPdABFcvIie94x7ld2bT90_c2fdTpOWiOZP6Cn7Cyb4LddRCE9TMgfjA-A_jlh0BVJ58bmX6MUF7uYcLU5ovrUzH4N5l");'></div>
+<div class="flex flex-1 flex-col justify-center">
+<p class="text-slate-900 dark:text-slate-100 text-base font-bold leading-normal">John Doe</p>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-normal leading-normal">MRI Scan - 14:00</p>
+</div>
+</div>
+<div class="flex flex-col items-end">
+<div class="flex items-center gap-1.5 text-rose-600 dark:text-rose-500 bg-rose-50 dark:bg-rose-500/10 px-2 py-1 rounded-md">
+<span class="material-symbols-outlined text-lg">warning</span>
+<span class="font-bold text-sm">85% Risk</span>
+</div>
+</div>
+</div>
+<!-- Prediction Insights -->
+<h3 class="text-slate-900 dark:text-slate-100 text-sm font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3">Prediction Insights</h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-rose-500 text-xl mt-0.5">history</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Historical Pattern</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">3 no-shows in the last 6 months</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-amber-500 text-xl mt-0.5">commute</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Distance from Lab</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Lives &gt;45 mins away in heavy traffic</p>
+</div>
+</li>
+<li class="flex items-start gap-3">
+<span class="material-symbols-outlined text-slate-400 text-xl mt-0.5">mail</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-slate-100">Confirmation Status</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">Did not reply to SMS reminder 24h ago</p>
+</div>
+</li>
+</ul>
+</div>
+<!-- Backup Management -->
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-[-0.015em] px-4 pb-3 pt-2 flex items-center justify-between">
+            Suggested Backups
+            <span class="text-xs font-normal text-slate-500 dark:text-slate-400 bg-slate-200 dark:bg-slate-800 px-2 py-1 rounded-full">Waitlist</span>
+</h2>
+<div class="px-4 space-y-3 mb-8">
+<!-- Backup 1 -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[48px] w-[48px]" data-alt="Portrait of Sarah Smith, backup patient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAb1BFCG9UXlamsy6kmMGcW5LjoS5swbWFhEKXXONFI95PSjnv_SciuNVuQscEd_AgaR1pxr6PYWJdS3DAZ16HLIVeA2d-wrp12hNSqxLJYRh_uQ5Ks7MqVDsKlqrwvoWax7Ilv-FZWpIRFMU17udJuep4JA_SI4j0qnUKq1K5quLM7Dfrmonx_rP9FR5O-B1iHbGM2LHmrBICHOREMqrXap6H5uOrUQZdKtex8IvnGq-cNEholPH6HrILXfH-Kcspb4wn6P7x_nJju");'></div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Sarah Smith</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> 5 mins away
+                            </p>
+</div>
+</div>
+<span class="text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-500/10 px-2 py-1 rounded-md">High Likelihood</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-primary text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors">
+<span class="material-symbols-outlined text-[18px]">call</span> Call Now
+                    </button>
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[18px]">sms</span> SMS
+                    </button>
+</div>
+</div>
+<!-- Backup 2 -->
+<div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-4">
+<div class="flex justify-between items-start mb-3">
+<div class="flex gap-3 items-center">
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full h-[48px] w-[48px]" data-alt="Portrait of Mike Johnson, backup patient" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsLlSbgIYPDw5VSzTse0RU5vo5DQNT4J67E4pwRcXOvSY7ePq5G4xkDGjjHNElSRWMWiXPbt3YpIlqmwo4RCCRhHhy-_uCqdK7QuWBfs88klMVxYmiiyI5icqBRyS2Pesf6CjzXNolbP2kROH0GCSSexxEkW8eheLiEy6HL44YQ6nwxpXc3joH3-f23PhB6upMO_L0VDSzrItNBlzFbyfiGaBXxoBKbaQjTOq37yC9GxEACRTdA132DkMk3qTMoqYt8WhJZsSnc-Es");'></div>
+<div>
+<p class="text-slate-900 dark:text-slate-100 text-sm font-bold">Mike Johnson</p>
+<p class="text-slate-500 dark:text-slate-400 text-xs flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">location_on</span> 15 mins away
+                            </p>
+</div>
+</div>
+<span class="text-xs font-medium text-amber-600 dark:text-amber-400 bg-amber-50 dark:bg-amber-500/10 px-2 py-1 rounded-md">Pending Reply</span>
+</div>
+<div class="flex gap-2">
+<button class="flex-1 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-2 opacity-70 cursor-not-allowed">
+<span class="material-symbols-outlined text-[18px]">call</span> Contacted
+                    </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation -->
+<div class="fixed bottom-0 w-full flex gap-2 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-6 pt-2 z-20">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">dashboard</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Dashboard</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px] font-variation-settings-'FILL'1">calendar_month</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Schedule</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">list_alt</span>
+</div>
+<p class="text-xs font-medium leading-normal tracking-[0.015em]">Waitlist</p>
+</a>
+</div>
+</body></html>

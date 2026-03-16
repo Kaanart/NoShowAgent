@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Patient Appointment Confirmation</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Public Sans", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex min-h-screen w-full flex-col mx-auto max-w-md bg-white dark:bg-slate-900 shadow-xl overflow-x-hidden">
+<!-- Header -->
+<div class="flex items-center p-4 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 sticky top-0 z-10">
+<h2 class="text-lg font-bold leading-tight flex-1 text-center">Appointment Confirmation</h2>
+</div>
+<!-- Content -->
+<div class="flex-1 overflow-y-auto pb-24">
+<!-- Hero Image -->
+<div class="@container">
+<div class="px-4 py-3">
+<div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden rounded-xl min-h-[160px] bg-slate-100 dark:bg-slate-800" data-alt="Abstract medical imaging illustration" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCSSosUVm0FDhgfIdm11sMhvtCEHd8unXq8GLAw2JnkQj3IxbQ5ndbNabM-0QSXS9uCOU4wQPajIXS3U8m1JeUaGZZR2pTlj_3XkUDEe-V5ZzsjiQ57M-qSlImpvAa5-HuA_jEhCvggTQwaFpkqMFQ084AyiDtsOid0EMB7yZBeCUbdewnjslmPz-__hOlFZ2_DUMGNwg4WV1Zeg_7LaK-zdHJtUuSwibdWglZ-h6E2VPsJigm3-HV2mo3VxBe-tI8fSp42jq2bHAD6");'></div>
+</div>
+</div>
+<!-- Title -->
+<h1 class="text-[22px] font-bold leading-tight px-4 text-center pb-3 pt-2 text-primary">MRI Appointment Details</h1>
+<p class="text-sm text-center px-4 pb-6 text-slate-600 dark:text-slate-400">Please review your upcoming appointment details below.</p>
+<!-- Details Card -->
+<div class="mx-4 mb-6 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="grid grid-cols-[24px_1fr] gap-x-4 items-center py-3 border-b border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">calendar_month</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Date</p>
+<p class="text-sm font-semibold">October 15, 2023</p>
+</div>
+</div>
+<div class="grid grid-cols-[24px_1fr] gap-x-4 items-center py-3 border-b border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-primary">schedule</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Time</p>
+<p class="text-sm font-semibold">10:00 AM</p>
+</div>
+</div>
+<div class="grid grid-cols-[24px_1fr] gap-x-4 items-center py-3">
+<span class="material-symbols-outlined text-primary">location_on</span>
+<div>
+<p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Location</p>
+<p class="text-sm font-semibold">Main Hospital, MRI Lab, Floor 2</p>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="px-4 flex flex-col gap-3 mb-8">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 px-4 rounded-xl shadow-md transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">check_circle</span>
+                    Confirm Attendance
+                </button>
+<button class="w-full bg-white dark:bg-slate-800 border-2 border-slate-300 dark:border-slate-600 hover:border-slate-400 dark:hover:border-slate-500 text-slate-700 dark:text-slate-300 font-semibold py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">edit_calendar</span>
+                    Reschedule or Cancel
+                </button>
+</div>
+<!-- Instructions -->
+<div class="px-4 mb-8">
+<h3 class="font-bold text-lg mb-4 border-b border-slate-200 dark:border-slate-800 pb-2">Preparation Instructions</h3>
+<ul class="space-y-4">
+<li class="flex gap-3 items-start">
+<div class="bg-primary/10 dark:bg-primary/20 p-2 rounded-lg text-primary mt-0.5">
+<span class="material-symbols-outlined text-sm">timer</span>
+</div>
+<div>
+<p class="font-semibold text-sm">Arrive Early</p>
+<p class="text-sm text-slate-600 dark:text-slate-400">Please arrive 15 minutes prior to your appointment time for registration.</p>
+</div>
+</li>
+<li class="flex gap-3 items-start">
+<div class="bg-red-100 dark:bg-red-900/30 p-2 rounded-lg text-red-600 dark:text-red-400 mt-0.5">
+<span class="material-symbols-outlined text-sm">block</span>
+</div>
+<div>
+<p class="font-semibold text-sm">No Metal Objects</p>
+<p class="text-sm text-slate-600 dark:text-slate-400">Remove all jewelry, watches, and metallic items before entering the scanning room.</p>
+</div>
+</li>
+<li class="flex gap-3 items-start">
+<div class="bg-primary/10 dark:bg-primary/20 p-2 rounded-lg text-primary mt-0.5">
+<span class="material-symbols-outlined text-sm">medical_information</span>
+</div>
+<div>
+<p class="font-semibold text-sm">Bring ID</p>
+<p class="text-sm text-slate-600 dark:text-slate-400">Remember to bring your photo ID and insurance card.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="h-8"></div>
+</div>
+<!-- BottomNavBar -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto flex gap-2 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pb-4 pt-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">home</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-wide uppercase">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">calendar_month</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-wide uppercase">Appointments</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-slate-500 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors" href="#">
+<div class="flex h-8 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">call</span>
+</div>
+<p class="text-[10px] font-medium leading-normal tracking-wide uppercase">Contact</p>
+</a>
+</div>
+</div>
+</body></html>
