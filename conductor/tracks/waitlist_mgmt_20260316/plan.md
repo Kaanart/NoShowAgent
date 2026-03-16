@@ -6,11 +6,11 @@
     - [x] Implement Feature for waitlist API endpoints (658d93e)
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Waitlist Endpoints' (Protocol in workflow.md)
 
-## Phase 2: Waitlist Auto-Promote Logic
+## Phase 2: Waitlist Auto-Promote Logic [checkpoint: 4c55136]
 - [x] Task: Develop auto-promote workflow
     - [x] Write Tests for auto-promote logic (4ec3209)
     - [x] Implement Feature for auto-promoting waitlisted patients (4ec3209)
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Waitlist Auto-Promote Logic' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Waitlist Auto-Promote Logic' (Protocol in workflow.md)
 
 ## Phase 3: Frontend Waitlist Integration
 - [ ] Task: Build waitlist UI components
