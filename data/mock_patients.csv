@@ -1,0 +1,5 @@
+patient_id,age,gender,distance_to_clinic,historical_no_show_rate,waitlist_status
+P001,45,M,12.5,0.0,false
+P002,32,F,5.2,0.25,true
+P003,60,M,25.0,0.5,false
+P004,28,O,2.1,0.0,true

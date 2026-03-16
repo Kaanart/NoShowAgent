@@ -1,0 +1,5 @@
+appointment_id,patient_id,appointment_datetime,clinic_id,provider_id,appointment_type,status,no_show
+A001,P001,2026-03-20 09:00:00,C01,DR01,Checkup,Scheduled,
+A002,P002,2026-03-20 10:30:00,C01,DR01,Follow-up,Scheduled,
+A003,P003,2025-11-15 14:00:00,C02,DR02,Consultation,No-Show,true
+A004,P004,2025-12-01 11:00:00,C01,DR03,Therapy,Completed,false
