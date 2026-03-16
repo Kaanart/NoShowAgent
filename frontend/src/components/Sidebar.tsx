@@ -31,20 +31,6 @@ const Sidebar: React.FC<SidebarProps> = ({ currentView, onViewChange, isOpen = f
           <span className="material-symbols-outlined">calendar_month</span>
           Schedule
         </div>
-
-        {/* Dummy items for visual completeness based on screenshot */}
-        <div className="nav-item text-slate-400 cursor-not-allowed">
-          <span className="material-symbols-outlined">group</span>
-          Patients
-        </div>
-        <div className="nav-item text-slate-400 cursor-not-allowed">
-          <span className="material-symbols-outlined">bar_chart</span>
-          Reports
-        </div>
-        <div className="nav-item text-slate-400 cursor-not-allowed">
-          <span className="material-symbols-outlined">settings</span>
-          Settings
-        </div>
       </nav>
 
       <div className="sidebar-footer">
