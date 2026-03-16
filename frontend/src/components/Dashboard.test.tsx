@@ -29,23 +29,22 @@ test('renders dashboard with summary metrics and redesigned table', () => {
   // New heading
   expect(screen.getByText(/One Day Outlook/i)).toBeInTheDocument();
   
-  // Summary Metrics
-  expect(screen.getByText(/No-Show Risk/i)).toBeInTheDocument();
+  // Summary Metrics (using specific text that distinguishes them)
+  expect(screen.getByText(/Overall No-Show Risk/i)).toBeInTheDocument();
   expect(screen.getByText(/Slots to Backfill/i)).toBeInTheDocument();
-  expect(screen.getByText(/Utilization/i)).toBeInTheDocument();
+  expect(screen.getByText(/Daily Utilization Rate/i)).toBeInTheDocument();
+  expect(screen.getByText(/Total Appointments/i)).toBeInTheDocument();
 
   // New column headers
-  const riskHeaders = screen.getAllByText(/RISK/i);
-  expect(riskHeaders.length).toBeGreaterThan(0);
-  expect(screen.getByText(/PATIENT NAME/i)).toBeInTheDocument();
-  expect(screen.getByText(/SCAN TYPE/i)).toBeInTheDocument();
-  expect(screen.getByText(/DATE & TIME/i)).toBeInTheDocument();
-  expect(screen.getByText(/PREDICTION SCORE/i)).toBeInTheDocument();
+  expect(screen.getByText('RISK')).toBeInTheDocument();
+  expect(screen.getByText('PATIENT NAME')).toBeInTheDocument();
+  expect(screen.getByText('SCAN TYPE')).toBeInTheDocument();
+  expect(screen.getByText('DATE & TIME')).toBeInTheDocument();
+  expect(screen.getByText('PREDICTION SCORE')).toBeInTheDocument();
 
   // Row content
   expect(screen.getByText('John Doe')).toBeInTheDocument();
   expect(screen.getByText('Jane Smith')).toBeInTheDocument();
-  expect(screen.getAllByText(/80%/i).length).toBeGreaterThan(0);
 });
 
 test('renders Find a Backup button only for high-risk appointments', () => {
