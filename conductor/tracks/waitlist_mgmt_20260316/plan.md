@@ -2,8 +2,8 @@
 
 ## Phase 1: Backend Waitlist Endpoints
 - [ ] Task: Implement endpoints for waitlisted patients
-    - [ ] Write Tests for waitlist retrieval logic
-    - [ ] Implement Feature for waitlist API endpoints
+    - [x] Write Tests for waitlist retrieval logic (658d93e)
+    - [~] Implement Feature for waitlist API endpoints
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Waitlist Endpoints' (Protocol in workflow.md)
 
 ## Phase 2: Waitlist Auto-Promote Logic
