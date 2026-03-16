@@ -8,9 +8,18 @@ const mockAppointments = [
 ];
 
 test('renders dashboard with appointments', () => {
-  render(<Dashboard appointments={mockAppointments} />);
+  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
   expect(screen.getByText(/Risk Dashboard/i)).toBeInTheDocument();
   expect(screen.getByText(/Appt ID: 1/i)).toBeInTheDocument();
   expect(screen.getByText(/Appt ID: 2/i)).toBeInTheDocument();
   expect(screen.getByText(/Risk: 80%/i)).toBeInTheDocument();
+});
+
+test('renders Auto-Promote button only for high-risk appointments', () => {
+  render(<Dashboard appointments={mockAppointments} onPromote={() => {}} />);
+  const promoteButtons = screen.getAllByText(/Auto-Promote/i);
+  
+  // Appt ID 2 is high risk (0.8), Appt ID 1 is low risk (0.1)
+  // So there should be exactly one promote button.
+  expect(promoteButtons).toHaveLength(1);
 });
