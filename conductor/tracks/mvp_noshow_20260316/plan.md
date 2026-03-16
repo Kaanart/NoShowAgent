@@ -30,10 +30,10 @@ This plan outlines the phases and tasks required to build the MVP.
 - [x] **Task:** Create a component to display the list of upcoming appointments.
     - [x] Sub-task: The component should fetch data from the backend API.
 - [x] **Task:** Write tests for the appointment list component.
-- [ ] **Task:** Implement the color-coding for the no-show probability score.
-- [ ] **Task:** Add the "Find Backup" button to high-risk appointments.
-- [ ] **Task:** Create a modal or panel to display the backup patient suggestions returned by the ADK agent.
-- [ ] **Task:** Write tests for the backup suggestion UI.
+- [x] **Task:** Implement the color-coding for the no-show probability score.
+- [x] **Task:** Add the "Find Backup" button to high-risk appointments.
+- [x] **Task:** Create a modal or panel to display the backup patient suggestions returned by the ADK agent.
+- [x] **Task:** Write tests for the backup suggestion UI.
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 3: Frontend Dashboard' (Protocol in workflow.md)
 
 ## Phase 4: ADK Agent Integration
