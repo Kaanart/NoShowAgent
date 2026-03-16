@@ -12,8 +12,8 @@
     - [x] Implement Feature: Refactor React components to match the new layout and styling for the weekly view and high-risk highlights (5bedf4a)
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Redesign Risk Dashboard & Calendar View' (Protocol in workflow.md)
 
-## Phase 3: Redesign Waitlist Management Section
+## Phase 3: Redesign Waitlist Management Section [checkpoint: cafb2e4]
 - [x] Task: Apply design system to the Waitlist table
     - [x] Write Tests for structural changes to the Waitlist component (81cbe3c)
     - [x] Implement Feature: Refactor the React component to match the new layout and styling for urgency indicators (81cbe3c)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Redesign Waitlist Management Section' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Redesign Waitlist Management Section' (Protocol in workflow.md)
