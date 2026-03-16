@@ -8,7 +8,7 @@ This plan outlines the phases and tasks required to build the MVP.
 - [x] **Task:** Write a data loading script to ingest the existing anonymized dataset into BigQuery.
 - [x] **Task:** Develop a Python script for data exploration, cleaning, and feature engineering.
 - [x] **Task:** Write Tests for the data processing script.
-- [ ] **Task:** Train an initial version of the no-show prediction model (e.g., Logistic Regression) using Scikit-learn.
+- [x] **Task:** Train an initial version of the no-show prediction model (e.g., Logistic Regression) using Scikit-learn.
 - [ ] **Task:** Write tests to evaluate the model's performance (e.g., accuracy, precision, recall).
 - [ ] **Task:** Conductor - User Manual Verification 'Phase 1: Data Preparation and Model Training' (Protocol in workflow.md)
 
