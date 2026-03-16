@@ -18,7 +18,7 @@ const mockAppointments = [
     age: 25, 
     past_no_shows: 5, 
     risk_score: 0.8,
-    appointment_date: "2026-03-24",
+    appointment_date: "2026-03-23",
     appointment_time: "14:30"
   },
 ];
