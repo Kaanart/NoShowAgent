@@ -9,12 +9,12 @@ This document outlines the technology stack for the Hospital No-Show Prediction 
 ## 2. Backend & ML Platform
 
 *   **Google Cloud:** The entire application will be built and deployed on Google Cloud.
-    *   **Compute:** Cloud Functions and Cloud Run will be used for serverless backend logic and hosting the ML model endpoints.
+    *   **Compute:** Cloud Functions (using `functions-framework`) and Cloud Run will be used for serverless backend logic and hosting the ML model endpoints.
     *   **AI Platform:** Google Cloud's AI Platform will be used for training, versioning, and deploying the no-show prediction model.
 
 ## 3. Frontend
 
-*   **Dashboard:** The user-facing dashboard for hospital staff will be built using **React**. Its component-based architecture will allow for the creation of a modular and responsive user interface to display schedules and prediction data. The frontend will be hosted on Firebase Hosting or Google App Engine.
+*   **Dashboard:** The user-facing dashboard for hospital staff will be built using **React** (initialized via Create React App) with standard CSS. Its component-based architecture will allow for the creation of a modular and responsive user interface to display schedules and prediction data. The frontend will be hosted on Firebase Hosting or Google App Engine.
 
 ## 4. Database
 
