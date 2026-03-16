@@ -45,6 +45,9 @@ test('renders dashboard with summary metrics and redesigned table', () => {
   // Row content
   expect(screen.getByText('John Doe')).toBeInTheDocument();
   expect(screen.getByText('Jane Smith')).toBeInTheDocument();
+
+  // Pagination Footer
+  expect(screen.getByText(/Showing 1 to 2 of 142 appointments/i)).toBeInTheDocument();
 });
 
 test('renders Find a Backup button only for high-risk appointments', () => {
