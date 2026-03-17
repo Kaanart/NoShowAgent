@@ -13,35 +13,63 @@ interface Suggestion {
   match_score: number;
 }
 
-const generateAppointmentsForWeek = (weekStartDate: Date, startId: number): any[] => {
-  const appointments = [];
+export interface Appointment {
+  id: number;
+  patient_name: string;
+  age: number;
+  past_no_shows: number;
+  risk_score: number;
+  appointment_date: string;
+  appointment_time: string;
+  scan_type: string;
+  duration: number;
+}
+
+export const generateAppointmentsForWeek = (weekStartDate: Date, startId: number): Appointment[] => {
+  const appointments: Appointment[] = [];
   let currentId = startId;
-  const patientNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson"];
+  const patientNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson"];
   const scanTypes = ["Quick Scan", "Long Scan", "Standard MRI", "Contrast MRI"];
+  const workdayStartMinutes = 8 * 60;
+  const workdayEndMinutes = 19 * 60;
+  const slotsPerDay = 8;
+  const minVisualDuration = 85;
 
   for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) { // Mon-Fri
-    const appointmentsPerDay = 6 + Math.floor(Math.random() * 5); // 6 to 10 appointments a day
+    let startMinutes = workdayStartMinutes;
     const currentDate = new Date(weekStartDate);
     currentDate.setDate(weekStartDate.getDate() + dayOfWeek);
     const dateStr = currentDate.toISOString().split('T')[0];
 
-    for (let i = 0; i < appointmentsPerDay; i++) {
-      const hour = 8 + i;
-      const timeStr = `${hour.toString().padStart(2, '0')}:${i % 2 === 0 ? '00' : '30'}`;
-      
+    for (let i = 0; i < slotsPerDay; i++) {
+      const appointmentId = currentId++;
+      const duration = (appointmentId + dayOfWeek) % 3 === 0 ? 60 : 30;
+      const visualDuration = Math.max(duration, minVisualDuration);
+      if (startMinutes + visualDuration > workdayEndMinutes) {
+        break;
+      }
+
+      const hours = Math.floor(startMinutes / 60);
+      const minutes = startMinutes % 60;
+      const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
       appointments.push({
-        id: currentId++,
-        patient_name: `${patientNames[currentId % patientNames.length]}, ${String.fromCharCode(65 + (currentId % 26))}.`,
-        age: 20 + (currentId % 65),
-        past_no_shows: Math.floor(Math.random() * 5),
-        risk_score: parseFloat(Math.random().toFixed(2)),
+        id: appointmentId,
+        patient_name: `${patientNames[(appointmentId - 1) % patientNames.length]}, ${String.fromCharCode(65 + ((appointmentId - 1) % 26))}.`,
+        age: 20 + (appointmentId % 65),
+        past_no_shows: appointmentId % 5,
+        risk_score: Number((((appointmentId * 17) % 100) / 100).toFixed(2)),
         appointment_date: dateStr,
         appointment_time: timeStr,
-        scan_type: scanTypes[currentId % scanTypes.length],
-        duration: Math.random() > 0.5 ? 60 : 30,
+        scan_type: scanTypes[(appointmentId - 1) % scanTypes.length],
+        duration,
       });
+
+      // Keep generated slots separated according to CalendarView's visual overlap rule.
+      startMinutes += visualDuration;
     }
   }
+
   return appointments;
 };
 
@@ -49,7 +77,7 @@ const week1Appointments = generateAppointmentsForWeek(new Date('2026-03-23T12:00
 const week2Appointments = generateAppointmentsForWeek(new Date('2026-03-30T12:00:00Z'), 101);
 const week3Appointments = generateAppointmentsForWeek(new Date('2026-04-06T12:00:00Z'), 201);
 
-const allAppointmentsByWeek = [week1Appointments, week2Appointments, week3Appointments];
+export const allAppointmentsByWeek = [week1Appointments, week2Appointments, week3Appointments];
 
 function App() {
   const [currentView, setCurrentView] = useState('Dashboard');
