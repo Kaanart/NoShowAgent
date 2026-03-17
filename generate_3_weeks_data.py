@@ -1,4 +1,5 @@
 import json
+import re
 from datetime import datetime, timedelta
 
 def get_start_of_week(dt):
@@ -11,19 +12,35 @@ start_of_this_week = get_start_of_week(now)
 patients_data = []
 patient_id_counter = 1
 
+def make_email(name: str, patient_number: int) -> str:
+    cleaned_parts = [
+        part.lower()
+        for part in re.sub(r"[^A-Za-z ]", "", name).split()
+        if part
+    ]
+    first = cleaned_parts[0] if cleaned_parts else "patient"
+    last = cleaned_parts[-1] if len(cleaned_parts) > 1 else "user"
+    return f"{first}.{last}{patient_number}@mail-example.com"
+
+def make_phone(patient_number: int) -> str:
+    return f"+1-202-555-{1000 + patient_number:04d}"
+
 # Generate appointments with non-overlapping timings
 for week in range(3):
     for day in range(5): # Monday to Friday
         current_day = start_of_this_week + timedelta(weeks=week, days=day)
         # 4 appointments a day, non-overlapping
         for hour in [9, 11, 13, 15]:
+            patient_name = f"Patient {patient_id_counter}"
             patients_data.append({
                 "id": f"P{patient_id_counter}",
-                "name": f"Patient {patient_id_counter}",
+                "name": patient_name,
                 "date": current_day.strftime("%Y-%m-%d"),
                 "time": f"{hour:02d}:00",
                 "distance": round(1.0 + (patient_id_counter * 0.1), 1),
-                "historical_no_show_rate": round(0.01 * (patient_id_counter % 20), 2)
+                "historical_no_show_rate": round(0.01 * (patient_id_counter % 20), 2),
+                "email": make_email(patient_name, patient_id_counter),
+                "phone": make_phone(patient_id_counter),
             })
             patient_id_counter += 1
 
