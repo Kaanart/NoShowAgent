@@ -15,9 +15,14 @@ def test_auto_promote_endpoint_success():
     assert data["status"] == "success"
     assert "suggestions" in data
     assert isinstance(data["suggestions"], list)
-    if len(data["suggestions"]) > 0:
-        assert "id" in data["suggestions"][0]
-        assert "match_score" in data["suggestions"][0]
+    assert len(data["suggestions"]) == 3
+    assert "id" in data["suggestions"][0]
+    assert "match_score" in data["suggestions"][0]
+    assert "risk_score" in data["suggestions"][0]
+    assert "historical_no_show_rate" in data["suggestions"][0]
+    assert "duration" in data["suggestions"][0]
+    assert "available_date" in data["suggestions"][0]
+    assert "available_time" in data["suggestions"][0]
     assert data["original_appointment_id"] == appointment_id
 
 def test_auto_promote_endpoint_invalid_appointment():

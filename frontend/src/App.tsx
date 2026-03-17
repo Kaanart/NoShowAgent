@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import CalendarView from './components/CalendarView';
 import Dialog from './components/ui/Dialog';
 import Button from './components/ui/Button';
+import patients3Weeks from './patients_3_weeks.json';
 import './App.css';
 
 interface Suggestion {
@@ -25,59 +26,104 @@ export interface Appointment {
   duration: number;
 }
 
-export const generateAppointmentsForWeek = (weekStartDate: Date, startId: number): Appointment[] => {
-  const appointments: Appointment[] = [];
-  let currentId = startId;
-  const patientNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson"];
-  const scanTypes = ["Quick Scan", "Long Scan", "Standard MRI", "Contrast MRI"];
-  const workdayStartMinutes = 8 * 60;
-  const workdayEndMinutes = 19 * 60;
-  const slotsPerDay = 8;
-  const minVisualDuration = 85;
-
-  for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) { // Mon-Fri
-    let startMinutes = workdayStartMinutes;
-    const currentDate = new Date(weekStartDate);
-    currentDate.setDate(weekStartDate.getDate() + dayOfWeek);
-    const dateStr = currentDate.toISOString().split('T')[0];
-
-    for (let i = 0; i < slotsPerDay; i++) {
-      const appointmentId = currentId++;
-      const duration = (appointmentId + dayOfWeek) % 3 === 0 ? 60 : 30;
-      const visualDuration = Math.max(duration, minVisualDuration);
-      if (startMinutes + visualDuration > workdayEndMinutes) {
-        break;
-      }
-
-      const hours = Math.floor(startMinutes / 60);
-      const minutes = startMinutes % 60;
-      const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
-
-      appointments.push({
-        id: appointmentId,
-        patient_name: `${patientNames[(appointmentId - 1) % patientNames.length]}, ${String.fromCharCode(65 + ((appointmentId - 1) % 26))}.`,
-        age: 20 + (appointmentId % 65),
-        past_no_shows: appointmentId % 5,
-        risk_score: Number((((appointmentId * 17) % 100) / 100).toFixed(2)),
-        appointment_date: dateStr,
-        appointment_time: timeStr,
-        scan_type: scanTypes[(appointmentId - 1) % scanTypes.length],
-        duration,
-      });
-
-      // Keep generated slots separated according to CalendarView's visual overlap rule.
-      startMinutes += visualDuration;
-    }
-  }
-
-  return appointments;
+type RawPatientAppointment = {
+  id: string;
+  name: string;
+  date: string;
+  time: string;
+  distance: number;
+  historical_no_show_rate: number;
+  duration?: number;
 };
 
-const week1Appointments = generateAppointmentsForWeek(new Date('2026-03-23T12:00:00Z'), 1);
-const week2Appointments = generateAppointmentsForWeek(new Date('2026-03-30T12:00:00Z'), 101);
-const week3Appointments = generateAppointmentsForWeek(new Date('2026-04-06T12:00:00Z'), 201);
+const rawAppointments = patients3Weeks as RawPatientAppointment[];
+const scanTypes = ["Quick Scan", "Long Scan", "Standard MRI", "Contrast MRI"];
 
-export const allAppointmentsByWeek = [week1Appointments, week2Appointments, week3Appointments];
+const toMinutes = (time: string): number => {
+  const [hours, minutes] = time.split(':').map(Number);
+  return (hours * 60) + minutes;
+};
+
+const deriveDurationById = (items: RawPatientAppointment[]): Record<string, number> => {
+  const byDate: Record<string, RawPatientAppointment[]> = {};
+  const durations: Record<string, number> = {};
+  const gaps: number[] = [];
+
+  items.forEach((item) => {
+    if (!byDate[item.date]) {
+      byDate[item.date] = [];
+    }
+    byDate[item.date].push(item);
+  });
+
+  Object.values(byDate).forEach((daily) => {
+    const sorted = [...daily].sort((a, b) => toMinutes(a.time) - toMinutes(b.time));
+    sorted.forEach((current, index) => {
+      if (typeof current.duration === 'number' && current.duration > 0) {
+        durations[current.id] = current.duration;
+        return;
+      }
+      if (index < sorted.length - 1) {
+        const gap = Math.max(15, toMinutes(sorted[index + 1].time) - toMinutes(current.time));
+        gaps.push(gap);
+        durations[current.id] = gap;
+      }
+    });
+  });
+
+  const defaultDuration = gaps.length > 0
+    ? Math.round(gaps.reduce((sum, value) => sum + value, 0) / gaps.length)
+    : 120;
+
+  items.forEach((item) => {
+    if (!durations[item.id]) {
+      durations[item.id] = item.duration ?? defaultDuration;
+    }
+  });
+
+  return durations;
+};
+
+const durationById = deriveDurationById(rawAppointments);
+
+const getWeekStartIso = (isoDate: string): string => {
+  const date = new Date(`${isoDate}T12:00:00Z`);
+  const day = date.getUTCDay();
+  const diff = day === 0 ? -6 : (1 - day);
+  date.setUTCDate(date.getUTCDate() + diff);
+  return date.toISOString().split('T')[0];
+};
+
+const weeklyBuckets = rawAppointments.reduce<Record<string, Appointment[]>>((acc, item) => {
+  const weekKey = getWeekStartIso(item.date);
+  const numericId = Number(String(item.id).replace(/^P/, ''));
+  const appointment: Appointment = {
+    id: numericId,
+    patient_name: item.name,
+    age: 30 + (numericId % 40),
+    past_no_shows: Math.round(item.historical_no_show_rate * 10),
+    risk_score: Math.min(0.95, item.historical_no_show_rate * 20),
+    appointment_date: item.date,
+    appointment_time: item.time,
+    scan_type: scanTypes[(numericId - 1) % scanTypes.length],
+    duration: durationById[item.id],
+  };
+
+  if (!acc[weekKey]) {
+    acc[weekKey] = [];
+  }
+  acc[weekKey].push(appointment);
+  return acc;
+}, {});
+
+export const allAppointmentsByWeek: Appointment[][] = Object.keys(weeklyBuckets)
+  .sort()
+  .map((weekKey) => weeklyBuckets[weekKey].sort((a, b) => {
+    if (a.appointment_date === b.appointment_date) {
+      return toMinutes(a.appointment_time) - toMinutes(b.appointment_time);
+    }
+    return a.appointment_date.localeCompare(b.appointment_date);
+  }));
 
 function App() {
   const [currentView, setCurrentView] = useState('Dashboard');
@@ -115,7 +161,7 @@ function App() {
   };
   
   const getWeekDateRange = () => {
-    const today = new Date('2026-03-23T12:00:00Z'); // Using a fixed date for consistency
+    const today = new Date('2026-03-16T12:00:00Z'); // Week 1 in patients_3_weeks.json
     today.setDate(today.getDate() + (weekOffset * 7));
     const dayOfWeek = today.getDay();
     
@@ -204,7 +250,7 @@ function App() {
         title="Select Backup Patient"
       >
         <p style={{ color: 'var(--text-dark)', marginBottom: '1rem' }}>
-          Select a patient from the waitlist to auto-promote to appointment slot #{selectedAppointmentId}. Patients are ordered by highest match score.
+          Select a backup patient to auto-promote to appointment slot #{selectedAppointmentId}. Candidates are ordered by highest match score.
         </p>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
           {suggestedBackups.map(patient => (
