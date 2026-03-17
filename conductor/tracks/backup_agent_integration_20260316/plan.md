@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Frontend Dialog Component' (Protocol in workflow.md)
 
 ## Phase 3: Connect UI to Backend Logic
-- [ ] Task: Implement backup selection dialog
-    - [~] Write Tests to verify the dialog displays sorted suggestions and handles promotion clicks
-    - [ ] Implement Feature: Update `Dashboard` and `CalendarView` to fetch suggestions from `/promote`, open the dialog, and handle one-click promotion logic
+- [x] Task: Implement backup selection dialog
+    - [x] Write Tests to verify the dialog displays sorted suggestions and handles promotion clicks (d4b2c1a)
+    - [x] Implement Feature: Update `Dashboard` and `CalendarView` to fetch suggestions from `/promote`, open the dialog, and handle one-click promotion logic (d4b2c1a)
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Connect UI to Backend Logic' (Protocol in workflow.md)
