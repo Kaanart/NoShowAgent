@@ -5,6 +5,7 @@ import App, { allAppointmentsByWeek } from './App';
 // Mock fetch globally
 global.fetch = jest.fn(() =>
   Promise.resolve({
+    ok: true,
     json: () => Promise.resolve({
       status: "success",
       original_appointment_id: 2,
@@ -55,6 +56,27 @@ test('opens backup selection dialog on Find a Backup click and displays suggesti
   // Verify the mock suggestion is displayed
   expect(screen.getByText(/Bob Smith/i)).toBeInTheDocument();
   expect(screen.getByText(/85% Match/i)).toBeInTheDocument(); // match score
+});
+
+test('opens inline email draft when selecting a backup patient', async () => {
+  render(<App />);
+
+  const promoteButtons = screen.getAllByText(/Find a Backup/i);
+  fireEvent.click(promoteButtons[0]);
+
+  await waitFor(() => {
+    expect(screen.getByText(/Select Backup Patient/i)).toBeInTheDocument();
+  });
+
+  fireEvent.click(screen.getByText(/Bob Smith/i));
+
+  await waitFor(() => {
+    expect(screen.getByText(/Email Draft for Bob Smith/i)).toBeInTheDocument();
+  });
+
+  expect(screen.getByText(/Review and edit the draft below before sending/i)).toBeInTheDocument();
+  expect(screen.getByDisplayValue(/We have an available MRI appointment slot on/i)).toBeInTheDocument();
+  expect(screen.getByText(/Send Email/i)).toBeInTheDocument();
 });
 
 test('3-week patient data has no overlapping appointment times on the same day', () => {

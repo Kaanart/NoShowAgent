@@ -8,10 +8,13 @@ import patients3Weeks from './patients_3_weeks.json';
 import './App.css';
 
 interface Suggestion {
-  id: string;
+  id: string | number;
   name: string;
   distance: number;
   match_score: number;
+  email?: string;
+  available_date?: string;
+  available_time?: string;
 }
 
 export interface Appointment {
@@ -134,30 +137,68 @@ function App() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [suggestedBackups, setSuggestedBackups] = useState<Suggestion[]>([]);
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
+  const [promoteError, setPromoteError] = useState<string | null>(null);
+  const [selectedBackupPatient, setSelectedBackupPatient] = useState<Suggestion | null>(null);
+  const [notificationDraft, setNotificationDraft] = useState('');
 
   const appointments = allAppointmentsByWeek[weekOffset];
 
   const handlePromote = async (appointmentId: number) => {
     console.log(`Promoting patient to appointment ${appointmentId}`);
     setSelectedAppointmentId(appointmentId);
+    setPromoteError(null);
     
     try {
       const response = await fetch(`/promote/${appointmentId}`, {
         method: 'POST',
       });
       const data = await response.json();
+      if (!response.ok) {
+        setSuggestedBackups([]);
+        setPromoteError(data?.detail || 'Unable to fetch backup suggestions.');
+        setIsDialogOpen(true);
+        return;
+      }
       if (data.status === 'success') {
         setSuggestedBackups(data.suggestions || []);
+        setSelectedBackupPatient(null);
+        setNotificationDraft('');
         setIsDialogOpen(true);
       }
     } catch (error) {
       console.error("Failed to fetch suggestions", error);
+      setSuggestedBackups([]);
+      setPromoteError('Unable to reach the backup service. Please try again.');
+      setIsDialogOpen(true);
     }
   };
 
-  const confirmPromotion = (patient: Suggestion) => {
-    console.log(`Confirmed promotion for patient ${patient.name} to appointment ${selectedAppointmentId}`);
+  const getAppointmentSlotText = () => {
+    if (!selectedAppointmentId) return 'the available time';
+    const slot = appointments.find((appt) => appt.id === selectedAppointmentId);
+    if (!slot) return 'the available time';
+    return `${slot.appointment_date} at ${slot.appointment_time}`;
+  };
+
+  const openDraftForPatient = (patient: Suggestion) => {
+    setSelectedBackupPatient(patient);
+    const slotText = getAppointmentSlotText();
+    setNotificationDraft(
+      `Hello ${patient.name},\n\nWe have an available MRI appointment slot on ${slotText}. If you would like to take this appointment time, please reply to confirm and we will schedule you.\n\nBest regards,\nMRI Scheduling Team`
+    );
+  };
+
+  const sendNotification = () => {
+    if (!selectedBackupPatient) return;
+    console.log(`Sending notification to ${selectedBackupPatient.name} for slot ${selectedAppointmentId}`);
     setIsDialogOpen(false);
+    setSelectedBackupPatient(null);
+    setNotificationDraft('');
+  };
+
+  const closeDraft = () => {
+    setSelectedBackupPatient(null);
+    setNotificationDraft('');
   };
   
   const getWeekDateRange = () => {
@@ -246,44 +287,89 @@ function App() {
 
       <Dialog 
         isOpen={isDialogOpen} 
-        onClose={() => setIsDialogOpen(false)} 
-        title="Select Backup Patient"
+        onClose={() => {
+          setIsDialogOpen(false);
+          closeDraft();
+        }} 
+        title={selectedBackupPatient ? `Email Draft for ${selectedBackupPatient.name}` : "Select Backup Patient"}
       >
-        <p style={{ color: 'var(--text-dark)', marginBottom: '1rem' }}>
-          Select a backup patient to auto-promote to appointment slot #{selectedAppointmentId}. Candidates are ordered by highest match score.
-        </p>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {suggestedBackups.map(patient => (
-            <div 
-              key={patient.id} 
-              style={{ 
-                display: 'flex', 
-                justifyContent: 'space-between', 
-                alignItems: 'center', 
-                padding: '1rem', 
-                border: '1px solid var(--border-light)', 
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'background-color 0.2s'
-              }}
-              onClick={() => confirmPromotion(patient)}
-              onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
-              onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            >
-              <div>
-                <strong style={{ display: 'block', color: 'var(--text-dark)' }}>{patient.name} ({patient.id})</strong>
-                <span style={{ fontSize: '0.875rem', color: '#64748b' }}>{patient.distance} miles away</span>
+        {!selectedBackupPatient ? (
+          <>
+            <p style={{ color: 'var(--text-dark)', marginBottom: '1rem' }}>
+              Select a backup patient to auto-promote to appointment slot #{selectedAppointmentId}. Candidates are ordered by highest match score.
+            </p>
+            {promoteError && (
+              <p style={{ color: '#b91c1c', background: '#fee2e2', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem' }}>
+                {promoteError}
+              </p>
+            )}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+              {suggestedBackups.map(patient => (
+                <div 
+                  key={patient.id} 
+                  style={{ 
+                    display: 'flex', 
+                    justifyContent: 'space-between', 
+                    alignItems: 'center', 
+                    padding: '1rem', 
+                    border: '1px solid var(--border-light)', 
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.2s'
+                  }}
+                  onClick={() => openDraftForPatient(patient)}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f1f5f9'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  <div>
+                    <strong style={{ display: 'block', color: 'var(--text-dark)' }}>{patient.name} ({patient.id})</strong>
+                    <span style={{ fontSize: '0.875rem', color: '#64748b' }}>{patient.distance} miles away</span>
+                  </div>
+                  <div style={{ textAlign: 'right' }}>
+                    <div style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{patient.match_score}% Match</div>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Click to Draft Email</span>
+                  </div>
+                </div>
+              ))}
+              {suggestedBackups.length === 0 && (
+                <p style={{ color: '#64748b', textAlign: 'center', padding: '1rem' }}>No suitable backups found.</p>
+              )}
+            </div>
+          </>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.875rem' }}>
+            <p style={{ color: '#64748b', margin: 0 }}>Review and edit the draft below before sending.</p>
+            <div style={{ border: '1px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem 0.875rem', background: '#f8fafc' }}>
+              <div style={{ fontSize: '0.875rem', color: '#475569' }}>
+                <strong style={{ color: '#1f2937' }}>To:</strong> {selectedBackupPatient.email || `${selectedBackupPatient.name.replace(/\s+/g, '.').toLowerCase()}@mail-example.com`}
               </div>
-              <div style={{ textAlign: 'right' }}>
-                <div style={{ fontWeight: 'bold', color: 'var(--primary)' }}>{patient.match_score}% Match</div>
-                <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Click to Promote</span>
+              <div style={{ fontSize: '0.875rem', color: '#475569', marginTop: '0.35rem' }}>
+                <strong style={{ color: '#1f2937' }}>Subject:</strong> MRI appointment slot available
               </div>
             </div>
-          ))}
-          {suggestedBackups.length === 0 && (
-            <p style={{ color: '#64748b', textAlign: 'center', padding: '1rem' }}>No suitable backups found.</p>
-          )}
-        </div>
+            <textarea
+              value={notificationDraft}
+              onChange={(e) => setNotificationDraft(e.target.value)}
+              style={{
+                width: '100%',
+                boxSizing: 'border-box',
+                minHeight: '220px',
+                maxHeight: '48vh',
+                borderRadius: '10px',
+                border: '1px solid #4f6af5',
+                padding: '1rem 1.05rem',
+                fontSize: '0.98rem',
+                lineHeight: 1.55,
+                color: '#334155',
+                resize: 'none'
+              }}
+            />
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', paddingTop: '0.5rem', borderTop: '1px solid #e2e8f0' }}>
+              <Button variant="outline" onClick={closeDraft}>Cancel</Button>
+              <Button variant="primary" onClick={sendNotification}>Send Email</Button>
+            </div>
+          </div>
+        )}
       </Dialog>
     </div>
   );

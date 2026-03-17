@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from typing import List
+from dotenv import load_dotenv
 from .risk_engine import RiskEngine
 from .middleware import AuditLogMiddleware
 from .backup_agent import BackupPatientAgent
+
+load_dotenv(override=True)
 
 app = FastAPI()
 app.add_middleware(AuditLogMiddleware)
@@ -53,6 +56,10 @@ def promote_patient(appointment_id: int):
         suggestions = backup_agent.find_backups(appointment_id)
     except ValueError as exc:
         raise HTTPException(status_code=404, detail=str(exc))
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc))
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=f"Backup agent request failed: {exc}")
     
     return {
         "status": "success",
