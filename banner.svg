@@ -1,0 +1,41 @@
+<svg width="800" height="200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F2027" />
+      <stop offset="50%" stop-color="#203A43" />
+      <stop offset="100%" stop-color="#2C5364" />
+    </linearGradient>
+    <linearGradient id="text-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00C9FF" />
+      <stop offset="100%" stop-color="#92FE9D" />
+    </linearGradient>
+  </defs>
+  
+  <rect width="800" height="200" fill="url(#bg-gradient)" rx="15" />
+  
+  <g transform="translate(50, 60)">
+    <!-- Calendar Icon -->
+    <rect x="0" y="10" width="60" height="60" rx="8" fill="none" stroke="#92FE9D" stroke-width="4"/>
+    <line x1="0" y1="30" x2="60" y2="30" stroke="#92FE9D" stroke-width="4"/>
+    <line x1="15" y1="0" x2="15" y2="20" stroke="#00C9FF" stroke-width="4" stroke-linecap="round"/>
+    <line x1="45" y1="0" x2="45" y2="20" stroke="#00C9FF" stroke-width="4" stroke-linecap="round"/>
+    <!-- Checkmark inside calendar -->
+    <polyline points="15,45 25,55 45,35" fill="none" stroke="#00C9FF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <text x="140" y="100" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="url(#text-gradient)">NoShowAgent</text>
+  <text x="145" y="140" font-family="Arial, sans-serif" font-size="20" fill="#E0E0E0">Hospital No-Show Prediction System</text>
+  
+  <!-- Decorative AI Network Nodes -->
+  <g transform="translate(600, 50)">
+    <circle cx="50" cy="20" r="6" fill="#00C9FF"/>
+    <circle cx="120" cy="40" r="8" fill="#92FE9D"/>
+    <circle cx="30" cy="80" r="5" fill="#00C9FF"/>
+    <circle cx="100" cy="90" r="7" fill="#92FE9D"/>
+    
+    <line x1="50" y1="20" x2="120" y2="40" stroke="#00C9FF" stroke-width="2" opacity="0.5"/>
+    <line x1="50" y1="20" x2="30" y2="80" stroke="#92FE9D" stroke-width="2" opacity="0.5"/>
+    <line x1="120" y1="40" x2="100" y2="90" stroke="#00C9FF" stroke-width="2" opacity="0.5"/>
+    <line x1="30" y1="80" x2="100" y2="90" stroke="#92FE9D" stroke-width="2" opacity="0.5"/>
+  </g>
+</svg>

@@ -1,6 +1,6 @@
 # NoShowAgent: Hospital No-Show Prediction System
 
-![NoShowAgent Banner](https://via.placeholder.com/800x200.png?text=NoShowAgent)
+![NoShowAgent Banner](./banner.svg)
 
 ## Overview
 
