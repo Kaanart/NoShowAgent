@@ -1,0 +1,8 @@
+fastapi
+uvicorn[standard]
+pytest
+httpx
+pytest-cov
+google-cloud-bigquery
+python-dotenv
+google-cloud-aiplatform
