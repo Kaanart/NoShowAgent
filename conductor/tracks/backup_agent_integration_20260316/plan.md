@@ -1,14 +1,14 @@
 # Implementation Plan
 
-## Phase 1: Backend Agent Integration
+## Phase 1: Backend Agent Integration [checkpoint: e5bf2c5]
 - [x] Task: Integrate `BackupPatientAgent` into FastAPI
     - [x] Write Tests to verify the agent returns sorted backup suggestions (42aff5e)
     - [x] Implement Feature: Copy `backup_agent.py` to backend, initialize it in `main.py`, and update `/promote` endpoint to return suggestions (42aff5e)
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Backend Agent Integration' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Backend Agent Integration' (Protocol in workflow.md)
 
 ## Phase 2: Frontend Dialog Component
 - [ ] Task: Build reusable Dialog component
-    - [ ] Write Tests for custom Dialog UI component rendering and interactions
+    - [~] Write Tests for custom Dialog UI component rendering and interactions
     - [ ] Implement Feature: Create a styled `Dialog.tsx` component in `frontend/src/components/ui/` matching the design system
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Frontend Dialog Component' (Protocol in workflow.md)
 
