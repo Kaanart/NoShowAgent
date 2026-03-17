@@ -52,9 +52,12 @@ test('opens backup selection dialog on Find a Backup click and displays suggesti
   await waitFor(() => {
     expect(screen.getByText(/Select Backup Patient/i)).toBeInTheDocument();
   });
+
+  await waitFor(() => {
+    expect(screen.getByText(/Bob Smith/i)).toBeInTheDocument();
+  });
   
   // Verify the mock suggestion is displayed
-  expect(screen.getByText(/Bob Smith/i)).toBeInTheDocument();
   expect(screen.getByText(/85% Match/i)).toBeInTheDocument(); // match score
 });
 
@@ -66,6 +69,10 @@ test('opens inline email draft when selecting a backup patient', async () => {
 
   await waitFor(() => {
     expect(screen.getByText(/Select Backup Patient/i)).toBeInTheDocument();
+  });
+
+  await waitFor(() => {
+    expect(screen.getByText(/Bob Smith/i)).toBeInTheDocument();
   });
 
   fireEvent.click(screen.getByText(/Bob Smith/i));

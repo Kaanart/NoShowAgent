@@ -17,10 +17,11 @@ interface Appointment {
 interface DashboardProps {
   appointments: Appointment[];
   onPromote: (appointmentId: number) => void;
+  promotingAppointmentId: number | null;
   onViewCalendar: () => void;
 }
 
-const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, onViewCalendar }) => {
+const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, promotingAppointmentId, onViewCalendar }) => {
   const uniqueDates = Array.from(new Set(appointments.map(a => a.appointment_date))).sort();
   const [selectedDate, setSelectedDate] = useState<string>(uniqueDates[0] || '');
   const [riskFilter, setRiskFilter] = useState<'All' | 'High' | 'Medium' | 'Low'>('All');
@@ -219,7 +220,15 @@ const Dashboard: React.FC<DashboardProps> = ({ appointments, onPromote, onViewCa
                       </td>
                       <td style={{ padding: '1.25rem 1rem' }}>
                         {appt.risk_score > 0.5 && (
-                          <Button variant="danger" size="sm" onClick={() => onPromote(appt.id)} style={{ fontSize: '0.75rem', padding: '0.375rem 0.75rem', borderRadius: '6px' }}>Find a Backup</Button>
+                          <Button
+                            variant="danger"
+                            size="sm"
+                            onClick={() => onPromote(appt.id)}
+                            disabled={promotingAppointmentId === appt.id}
+                            style={{ fontSize: '0.75rem', padding: '0.375rem 0.75rem', borderRadius: '6px' }}
+                          >
+                            {promotingAppointmentId === appt.id ? 'Finding...' : 'Find a Backup'}
+                          </Button>
                         )}
                       </td>
                     </tr>

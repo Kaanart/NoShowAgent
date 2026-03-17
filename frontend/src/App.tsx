@@ -138,6 +138,8 @@ function App() {
   const [suggestedBackups, setSuggestedBackups] = useState<Suggestion[]>([]);
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
   const [promoteError, setPromoteError] = useState<string | null>(null);
+  const [isLoadingBackups, setIsLoadingBackups] = useState(false);
+  const [promotingAppointmentId, setPromotingAppointmentId] = useState<number | null>(null);
   const [selectedBackupPatient, setSelectedBackupPatient] = useState<Suggestion | null>(null);
   const [notificationDraft, setNotificationDraft] = useState('');
 
@@ -147,29 +149,34 @@ function App() {
     console.log(`Promoting patient to appointment ${appointmentId}`);
     setSelectedAppointmentId(appointmentId);
     setPromoteError(null);
+    setSelectedBackupPatient(null);
+    setNotificationDraft('');
+    setSuggestedBackups([]);
+    setIsLoadingBackups(true);
+    setPromotingAppointmentId(appointmentId);
+    setIsDialogOpen(true);
     
     try {
       const response = await fetch(`/promote/${appointmentId}`, {
         method: 'POST',
       });
       const data = await response.json();
+      setIsLoadingBackups(false);
+      setPromotingAppointmentId(null);
       if (!response.ok) {
         setSuggestedBackups([]);
         setPromoteError(data?.detail || 'Unable to fetch backup suggestions.');
-        setIsDialogOpen(true);
         return;
       }
       if (data.status === 'success') {
         setSuggestedBackups(data.suggestions || []);
-        setSelectedBackupPatient(null);
-        setNotificationDraft('');
-        setIsDialogOpen(true);
       }
     } catch (error) {
       console.error("Failed to fetch suggestions", error);
+      setIsLoadingBackups(false);
+      setPromotingAppointmentId(null);
       setSuggestedBackups([]);
       setPromoteError('Unable to reach the backup service. Please try again.');
-      setIsDialogOpen(true);
     }
   };
 
@@ -222,6 +229,7 @@ function App() {
         <Dashboard 
           appointments={appointments} 
           onPromote={handlePromote} 
+          promotingAppointmentId={promotingAppointmentId}
           onViewCalendar={() => setCurrentView('Schedule')}
         />
       );
@@ -229,7 +237,7 @@ function App() {
       return (
         <div style={{ padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
           <h2 style={{ fontSize: '1.125rem', fontWeight: 'bold', marginBottom: '0.5rem' }}>Weekly Schedule</h2>
-          <CalendarView appointments={appointments} onPromote={handlePromote} />
+          <CalendarView appointments={appointments} onPromote={handlePromote} promotingAppointmentId={promotingAppointmentId} />
         </div>
       );
     }
@@ -298,6 +306,12 @@ function App() {
             <p style={{ color: 'var(--text-dark)', marginBottom: '1rem' }}>
               Select a backup patient to auto-promote to appointment slot #{selectedAppointmentId}. Candidates are ordered by highest match score.
             </p>
+            {isLoadingBackups && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', padding: '0.8rem 0.9rem', borderRadius: '8px', border: '1px solid #dbeafe', background: '#eff6ff', color: '#1d4ed8', marginBottom: '1rem' }}>
+                <span className="material-symbols-outlined" style={{ fontSize: '1.1rem' }}>hourglass_top</span>
+                <span>Finding backup patients...</span>
+              </div>
+            )}
             {promoteError && (
               <p style={{ color: '#b91c1c', background: '#fee2e2', padding: '0.75rem', borderRadius: '8px', marginBottom: '1rem' }}>
                 {promoteError}
@@ -331,7 +345,7 @@ function App() {
                   </div>
                 </div>
               ))}
-              {suggestedBackups.length === 0 && (
+              {!isLoadingBackups && !promoteError && suggestedBackups.length === 0 && (
                 <p style={{ color: '#64748b', textAlign: 'center', padding: '1rem' }}>No suitable backups found.</p>
               )}
             </div>

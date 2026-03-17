@@ -14,7 +14,7 @@ const mockAppointments = [
 ];
 
 test('renders calendar with weekdays only', () => {
-  render(<CalendarView appointments={mockAppointments} onPromote={() => {}} />);
+  render(<CalendarView appointments={mockAppointments} onPromote={() => {}} promotingAppointmentId={null} />);
   expect(screen.getByText(/Monday/i)).toBeInTheDocument();
   expect(screen.getByText(/Tuesday/i)).toBeInTheDocument();
   expect(screen.getByText(/Wednesday/i)).toBeInTheDocument();
@@ -27,7 +27,7 @@ test('renders calendar with weekdays only', () => {
 });
 
 test('renders appointment in the calendar', () => {
-  render(<CalendarView appointments={mockAppointments} onPromote={() => {}} />);
+  render(<CalendarView appointments={mockAppointments} onPromote={() => {}} promotingAppointmentId={null} />);
   expect(screen.getByText(/Patient 1/i)).toBeInTheDocument();
   // Using queryAllByText because 10:00 appears in the time gutter too
   const timeElements = screen.getAllByText(/10:00/i);

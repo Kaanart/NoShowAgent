@@ -15,9 +15,10 @@ interface Appointment {
 interface CalendarViewProps {
   appointments: Appointment[];
   onPromote: (appointmentId: number) => void;
+  promotingAppointmentId: number | null;
 }
 
-const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) => {
+const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote, promotingAppointmentId }) => {
   const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   const hours = Array.from({ length: 12 }, (_, i) => i + 8); // 8 AM to 7 PM
 
@@ -142,7 +143,9 @@ const CalendarView: React.FC<CalendarViewProps> = ({ appointments, onPromote }) 
                   <div className="appointment-time">{appt.appointment_time} {appt.scan_type && `- ${appt.scan_type}`}</div>
                   <div>Risk: {Math.round(appt.risk_score * 100)}%</div>
                   {appt.risk_score > 0.5 && (
-                    <button className="promote-btn" onClick={() => onPromote(appt.id)}>Find a Backup</button>
+                    <button className="promote-btn" disabled={promotingAppointmentId === appt.id} onClick={() => onPromote(appt.id)}>
+                      {promotingAppointmentId === appt.id ? 'Finding...' : 'Find a Backup'}
+                    </button>
                   )}
                 </div>
               ))}
