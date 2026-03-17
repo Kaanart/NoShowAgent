@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
-import App from './App';
+import App, { allAppointmentsByWeek } from './App';
 
 // Mock fetch globally
 global.fetch = jest.fn(() =>
@@ -55,4 +55,35 @@ test('opens backup selection dialog on Find a Backup click and displays suggesti
   // Verify the mock suggestion is displayed
   expect(screen.getByText(/Bob Smith/i)).toBeInTheDocument();
   expect(screen.getByText(/85% Match/i)).toBeInTheDocument(); // match score
+});
+
+test('3-week patient data has no overlapping appointment times on the same day', () => {
+  const toMinutes = (time: string) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return (hours * 60) + minutes;
+  };
+  const getVisualDuration = (duration: number) => Math.max(duration, 85);
+
+  for (const weekAppointments of allAppointmentsByWeek) {
+    const appointmentsByDate = weekAppointments.reduce<Record<string, typeof weekAppointments>>((acc, appointment) => {
+      if (!acc[appointment.appointment_date]) {
+        acc[appointment.appointment_date] = [];
+      }
+      acc[appointment.appointment_date].push(appointment);
+      return acc;
+    }, {});
+
+    for (const dailyAppointments of Object.values(appointmentsByDate)) {
+      const sorted = [...dailyAppointments].sort(
+        (a, b) => toMinutes(a.appointment_time) - toMinutes(b.appointment_time)
+      );
+
+      let previousEnd = -1;
+      for (const appointment of sorted) {
+        const start = toMinutes(appointment.appointment_time);
+        expect(start).toBeGreaterThanOrEqual(previousEnd);
+        previousEnd = start + getVisualDuration(appointment.duration);
+      }
+    }
+  }
 });

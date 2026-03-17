@@ -55,10 +55,34 @@ class BackupPatientAgent:
             return suggestions
 
         except Exception as e:
-            print(f"Agent BQ Query failed: {e}. Falling back to mock reasoning data.")
-            # Fallback mock data when BQ is not accessible (e.g., local testing)
-            return [
-                {"id": "P999", "name": "Alice Johnson", "distance": 1.2, "match_score": 98.5},
-                {"id": "P888", "name": "Bob Smith", "distance": 3.4, "match_score": 85.0},
-                {"id": "P777", "name": "Charlie Davis", "distance": 5.1, "match_score": 75.5}
-            ]
+            print(f"Agent BQ Query failed: {e}. Falling back to local 3-week data.")
+            import json
+            import os
+            
+            data_file = os.path.join(os.path.dirname(__file__), 'patients_3_weeks.json')
+            try:
+                with open(data_file, 'r') as f:
+                    local_patients = json.load(f)
+                    
+                suggestions = []
+                for p in local_patients:
+                    score = 100 - (p.get('distance', 5.0) * 2) - (p.get('historical_no_show_rate', 0.5) * 100)
+                    suggestions.append({
+                        "id": p['id'],
+                        "name": p['name'],
+                        "distance": p.get('distance', 5.0),
+                        "match_score": round(max(0, min(100, score)), 1),
+                        "available_date": p.get('date'),
+                        "available_time": p.get('time')
+                    })
+                
+                # Sort by score descending
+                suggestions.sort(key=lambda x: x['match_score'], reverse=True)
+                return suggestions[:limit]
+            except Exception as e2:
+                print(f"Failed to load local data: {e2}")
+                return [
+                    {"id": "P999", "name": "Alice Johnson", "distance": 1.2, "match_score": 98.5},
+                    {"id": "P888", "name": "Bob Smith", "distance": 3.4, "match_score": 85.0},
+                    {"id": "P777", "name": "Charlie Davis", "distance": 5.1, "match_score": 75.5}
+                ]

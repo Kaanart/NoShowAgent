@@ -13,299 +13,89 @@ interface Suggestion {
   match_score: number;
 }
 
+export interface Appointment {
+  id: number;
+  patient_name: string;
+  age: number;
+  past_no_shows: number;
+  risk_score: number;
+  appointment_date: string;
+  appointment_time: string;
+  scan_type: string;
+  duration: number;
+}
+
+export const generateAppointmentsForWeek = (weekStartDate: Date, startId: number): Appointment[] => {
+  const appointments: Appointment[] = [];
+  let currentId = startId;
+  const patientNames = ["Smith", "Jones", "Williams", "Brown", "Davis", "Miller", "Wilson", "Moore", "Taylor", "Anderson", "Thomas", "Jackson"];
+  const scanTypes = ["Quick Scan", "Long Scan", "Standard MRI", "Contrast MRI"];
+  const workdayStartMinutes = 8 * 60;
+  const workdayEndMinutes = 19 * 60;
+  const slotsPerDay = 8;
+  const minVisualDuration = 85;
+
+  for (let dayOfWeek = 0; dayOfWeek < 5; dayOfWeek++) { // Mon-Fri
+    let startMinutes = workdayStartMinutes;
+    const currentDate = new Date(weekStartDate);
+    currentDate.setDate(weekStartDate.getDate() + dayOfWeek);
+    const dateStr = currentDate.toISOString().split('T')[0];
+
+    for (let i = 0; i < slotsPerDay; i++) {
+      const appointmentId = currentId++;
+      const duration = (appointmentId + dayOfWeek) % 3 === 0 ? 60 : 30;
+      const visualDuration = Math.max(duration, minVisualDuration);
+      if (startMinutes + visualDuration > workdayEndMinutes) {
+        break;
+      }
+
+      const hours = Math.floor(startMinutes / 60);
+      const minutes = startMinutes % 60;
+      const timeStr = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+
+      appointments.push({
+        id: appointmentId,
+        patient_name: `${patientNames[(appointmentId - 1) % patientNames.length]}, ${String.fromCharCode(65 + ((appointmentId - 1) % 26))}.`,
+        age: 20 + (appointmentId % 65),
+        past_no_shows: appointmentId % 5,
+        risk_score: Number((((appointmentId * 17) % 100) / 100).toFixed(2)),
+        appointment_date: dateStr,
+        appointment_time: timeStr,
+        scan_type: scanTypes[(appointmentId - 1) % scanTypes.length],
+        duration,
+      });
+
+      // Keep generated slots separated according to CalendarView's visual overlap rule.
+      startMinutes += visualDuration;
+    }
+  }
+
+  return appointments;
+};
+
+const week1Appointments = generateAppointmentsForWeek(new Date('2026-03-23T12:00:00Z'), 1);
+const week2Appointments = generateAppointmentsForWeek(new Date('2026-03-30T12:00:00Z'), 101);
+const week3Appointments = generateAppointmentsForWeek(new Date('2026-04-06T12:00:00Z'), 201);
+
+export const allAppointmentsByWeek = [week1Appointments, week2Appointments, week3Appointments];
+
 function App() {
   const [currentView, setCurrentView] = useState('Dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  
+  const [weekOffset, setWeekOffset] = useState(0);
+
   // Dialog State
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [suggestedBackups, setSuggestedBackups] = useState<Suggestion[]>([]);
   const [selectedAppointmentId, setSelectedAppointmentId] = useState<number | null>(null);
 
-  const [appointments] = useState([
-    {
-        "id": 1,
-        "patient_name": "Ursula Williams",
-        "age": 49,
-        "past_no_shows": 5,
-        "risk_score": 0.8,
-        "appointment_date": "2026-03-27",
-        "appointment_time": "08:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 2,
-        "patient_name": "Tina Taylor",
-        "age": 68,
-        "past_no_shows": 0,
-        "risk_score": 0.37,
-        "appointment_date": "2026-03-27",
-        "appointment_time": "09:30",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 3,
-        "patient_name": "Bob Gonzalez",
-        "age": 36,
-        "past_no_shows": 0,
-        "risk_score": 0.59,
-        "appointment_date": "2026-03-27",
-        "appointment_time": "11:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 4,
-        "patient_name": "Alice Lee",
-        "age": 38,
-        "past_no_shows": 0,
-        "risk_score": 0.63,
-        "appointment_date": "2026-03-25",
-        "appointment_time": "08:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 5,
-        "patient_name": "Alice White",
-        "age": 34,
-        "past_no_shows": 5,
-        "risk_score": 0.1,
-        "appointment_date": "2026-03-27",
-        "appointment_time": "12:30",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 6,
-        "patient_name": "Ivy Thomas",
-        "age": 62,
-        "past_no_shows": 2,
-        "risk_score": 0.17,
-        "appointment_date": "2026-03-26",
-        "appointment_time": "08:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 7,
-        "patient_name": "Leo Jackson",
-        "age": 59,
-        "past_no_shows": 5,
-        "risk_score": 0.75,
-        "appointment_date": "2026-03-24",
-        "appointment_time": "08:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 8,
-        "patient_name": "Hank Jackson",
-        "age": 34,
-        "past_no_shows": 2,
-        "risk_score": 0.62,
-        "appointment_date": "2026-03-27",
-        "appointment_time": "14:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 9,
-        "patient_name": "Karen Hernandez",
-        "age": 50,
-        "past_no_shows": 2,
-        "risk_score": 0.24,
-        "appointment_date": "2026-03-26",
-        "appointment_time": "09:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 10,
-        "patient_name": "Hank Anderson",
-        "age": 60,
-        "past_no_shows": 0,
-        "risk_score": 0.68,
-        "appointment_date": "2026-03-25",
-        "appointment_time": "14:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 11,
-        "patient_name": "Ivy Anderson",
-        "age": 48,
-        "past_no_shows": 1,
-        "risk_score": 0.85,
-        "appointment_date": "2026-03-23",
-        "appointment_time": "08:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 12,
-        "patient_name": "Paul Miller",
-        "age": 53,
-        "past_no_shows": 0,
-        "risk_score": 0.35,
-        "appointment_date": "2026-03-26",
-        "appointment_time": "11:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 13,
-        "patient_name": "Frank Garcia",
-        "age": 64,
-        "past_no_shows": 0,
-        "risk_score": 0.62,
-        "appointment_date": "2026-03-26",
-        "appointment_time": "12:30",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 14,
-        "patient_name": "Tina White",
-        "age": 64,
-        "past_no_shows": 2,
-        "risk_score": 0.87,
-        "appointment_date": "2026-03-25",
-        "appointment_time": "09:30",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 15,
-        "patient_name": "Sam Brown",
-        "age": 61,
-        "past_no_shows": 0,
-        "risk_score": 0.11,
-        "appointment_date": "2026-03-24",
-        "appointment_time": "09:30",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 16,
-        "patient_name": "Grace Williams",
-        "age": 20,
-        "past_no_shows": 0,
-        "risk_score": 0.55,
-        "appointment_date": "2026-03-24",
-        "appointment_time": "11:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 17,
-        "patient_name": "Victor Martinez",
-        "age": 84,
-        "past_no_shows": 0,
-        "risk_score": 0.76,
-        "appointment_date": "2026-03-25",
-        "appointment_time": "11:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 18,
-        "patient_name": "Rachel Wilson",
-        "age": 30,
-        "past_no_shows": 0,
-        "risk_score": 0.61,
-        "appointment_date": "2026-03-25",
-        "appointment_time": "12:30",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 19,
-        "patient_name": "Jack Jones",
-        "age": 19,
-        "past_no_shows": 0,
-        "risk_score": 0.05,
-        "appointment_date": "2026-03-23",
-        "appointment_time": "09:30",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 20,
-        "patient_name": "Oscar Anderson",
-        "age": 35,
-        "past_no_shows": 0,
-        "risk_score": 0.36,
-        "appointment_date": "2026-03-23",
-        "appointment_time": "11:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 21,
-        "patient_name": "Jack Harris",
-        "age": 42,
-        "past_no_shows": 0,
-        "risk_score": 0.24,
-        "appointment_date": "2026-03-23",
-        "appointment_time": "12:30",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 22,
-        "patient_name": "Ivy Garcia",
-        "age": 62,
-        "past_no_shows": 2,
-        "risk_score": 0.77,
-        "appointment_date": "2026-03-26",
-        "appointment_time": "14:00",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 23,
-        "patient_name": "Ursula Anderson",
-        "age": 49,
-        "past_no_shows": 5,
-        "risk_score": 0.57,
-        "appointment_date": "2026-03-24",
-        "appointment_time": "12:30",
-        "scan_type": "Long Scan",
-        "duration": 60
-    },
-    {
-        "id": 24,
-        "patient_name": "Jack Garcia",
-        "age": 27,
-        "past_no_shows": 2,
-        "risk_score": 0.3,
-        "appointment_date": "2026-03-23",
-        "appointment_time": "14:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    },
-    {
-        "id": 25,
-        "patient_name": "Eve Anderson",
-        "age": 67,
-        "past_no_shows": 0,
-        "risk_score": 0.07,
-        "appointment_date": "2026-03-24",
-        "appointment_time": "14:00",
-        "scan_type": "Quick Scan",
-        "duration": 30
-    }
-  ]);
+  const appointments = allAppointmentsByWeek[weekOffset];
 
   const handlePromote = async (appointmentId: number) => {
     console.log(`Promoting patient to appointment ${appointmentId}`);
     setSelectedAppointmentId(appointmentId);
     
     try {
-      // In a real environment, this should point to your API URL
       const response = await fetch(`/promote/${appointmentId}`, {
         method: 'POST',
       });
@@ -321,9 +111,22 @@ function App() {
 
   const confirmPromotion = (patient: Suggestion) => {
     console.log(`Confirmed promotion for patient ${patient.name} to appointment ${selectedAppointmentId}`);
-    // In a real application, you'd send another request here to lock in the appointment
     setIsDialogOpen(false);
-    // Optionally update local state to reflect the new patient in that slot
+  };
+  
+  const getWeekDateRange = () => {
+    const today = new Date('2026-03-23T12:00:00Z'); // Using a fixed date for consistency
+    today.setDate(today.getDate() + (weekOffset * 7));
+    const dayOfWeek = today.getDay();
+    
+    const diff = today.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+    const monday = new Date(today.setDate(diff));
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+
+    const formatDate = (date: Date) => date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
+    return `${formatDate(monday)} - ${formatDate(sunday)}`;
   };
 
   const renderContent = () => {
@@ -352,7 +155,7 @@ function App() {
         currentView={currentView} 
         onViewChange={(view) => {
           setCurrentView(view);
-          setIsSidebarOpen(false); // Close on mobile after selection
+          setIsSidebarOpen(false);
         }} 
         isOpen={isSidebarOpen} 
       />
@@ -363,7 +166,22 @@ function App() {
             <button className="mobile-menu-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
               <span className="material-symbols-outlined">menu</span>
             </button>
-            <h1 className="header-title">MRI Lab Scheduling Dashboard</h1>
+            <div style={{ flexGrow: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem' }}>
+               <Button variant="outline" size="sm" onClick={() => setWeekOffset(prev => Math.max(0, prev - 1))} disabled={weekOffset === 0}>
+                  <span className="material-symbols-outlined">chevron_left</span>
+                  Prev Week
+               </Button>
+               <h1 className="header-title" style={{ textAlign: 'center' }}>
+                  MRI Lab Dashboard
+                  <span style={{ fontSize: '0.9rem', color: '#5f6368', display: 'block', fontWeight: 'normal' }}>
+                    {getWeekDateRange()}
+                  </span>
+               </h1>
+               <Button variant="outline" size="sm" onClick={() => setWeekOffset(prev => Math.min(allAppointmentsByWeek.length - 1, prev + 1))} disabled={weekOffset === allAppointmentsByWeek.length - 1}>
+                  Next Week
+                  <span className="material-symbols-outlined">chevron_right</span>
+               </Button>
+            </div>
           </div>
           <div className="header-actions">
             <button className="icon-btn">
