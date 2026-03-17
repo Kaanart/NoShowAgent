@@ -5,5 +5,23 @@ export default defineConfig({
   plugins: [react()],
   server: {
     port: 3000,
+    proxy: {
+      '/promote': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/predict': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/waitlist': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      },
+      '/health': {
+        target: 'http://127.0.0.1:8000',
+        changeOrigin: true,
+      }
+    }
   },
 })
