@@ -101,3 +101,4 @@ python scripts/train_synthetic.py
 ## License
 
 This project is licensed under the [LICENSE](./LICENSE) file included in the repository.
+
