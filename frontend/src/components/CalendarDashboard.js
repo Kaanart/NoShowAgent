@@ -43,7 +43,7 @@ const CalendarDashboard = () => {
     // We can still try to fetch, but we'll default to mock data if it fails
     const fetchAppointments = async () => {
       try {
-        const response = await fetch(process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8080/');
+        const response = await fetch(process.env.REACT_APP_BACKEND_API_URL || 'http://localhost:8081/');
         if (response.ok) {
           const data = await response.json();
           if (data.appointments && data.appointments.length > 5) {

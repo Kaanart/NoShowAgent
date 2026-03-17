@@ -65,23 +65,14 @@ def get_appointments_from_bq(limit=10):
 
 def call_model_api(appointment_data):
     """Calls the Model API to get a prediction."""
-    # Basic feature engineering transformation to match model expectations
-    # This must align with what the model was trained on
-    
-    # Example transformation matching the mock training data
-    dt = appointment_data['appointment_datetime']
-    # If dt is a string, parse it, if it's already a datetime object, use it directly
-    if isinstance(dt, str):
-        try:
-             dt = datetime.datetime.fromisoformat(dt.replace('Z', '+00:00'))
-        except ValueError:
-             dt = datetime.datetime.strptime(dt, "%Y-%m-%d %H:%M:%S")
-
+    # Pass exactly the features the model was trained on
     features = {
         'age': appointment_data.get('age', 0),
-        'distance_to_clinic': appointment_data.get('distance_to_clinic', 0.0),
-        'historical_no_show_rate': appointment_data.get('historical_no_show_rate', 0.0),
-        'hour': dt.hour if dt else 12 # Default to 12 PM if parsing fails
+        'distance_to_location': appointment_data.get('distance_to_location', 0.0),
+        'days_since_appointment_created': appointment_data.get('days_since_appointment_created', 0),
+        'days_since_last_appointment': appointment_data.get('days_since_last_appointment', 0),
+        'prev_no_show_count': appointment_data.get('prev_no_show_count', 0),
+        'no_show_ratio': appointment_data.get('no_show_ratio', 0.0)
     }
     
     try:
@@ -132,40 +123,51 @@ def get_dashboard_data(request):
         try:
             raw_appointments = get_appointments_from_bq(limit)
         except Exception as bq_err:
-            print(f"BigQuery fetch failed: {bq_err}. Falling back to mock data for testing.")
-            # Generate a rich set of mock data for the current week
+            print(f"BigQuery fetch failed: {bq_err}. Falling back to synthetic prediction data.")
+            import random
+            import json
+            
+            # Read synthetic_prediction_data.csv
+            # Compute path relative to this file
+            base_dir = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+            csv_path = os.path.join(base_dir, 'data', 'synthetic_prediction_data.csv')
+            
+            try:
+                pred_df = pd.read_csv(csv_path)
+                # Take a random sample of rows (or top rows) to show in the UI week view
+                pred_sample = pred_df.sample(n=min(30, len(pred_df)), random_state=42).to_dict('records')
+            except Exception as read_err:
+                print(f"Failed to read CSV: {read_err}")
+                pred_sample = []
+
             raw_appointments = []
-            days_to_add = [0, 1, 2, 3, 4] # Mon - Fri
+            providers = ["DR01", "DR02", "DR03", "DR04"]
             hours_to_add = [8, 9, 10, 11, 13, 14, 15, 16]
             
-            # Start of this week (Monday, March 16, 2026)
-            base_date = datetime.date(2026, 3, 16)
-            
-            import random
-            appt_types = ["Checkup", "Follow-up", "Consultation", "MRI Scan", "Bloodwork", "Therapy"]
-            providers = ["DR01", "DR02", "DR03", "DR04"]
-            
-            for day_offset in days_to_add:
-                # Add 3-5 random appointments per day
-                daily_hours = random.sample(hours_to_add, random.randint(4, 6))
-                for hour in daily_hours:
-                    appt_date = base_date + datetime.timedelta(days=day_offset)
-                    appt_dt = datetime.datetime.combine(appt_date, datetime.time(hour, 0))
-                    
-                    patient_id = f"P{random.randint(100, 999)}"
-                    raw_appointments.append({
-                        "appointment_id": f"A{random.randint(1000, 9999)}",
-                        "patient_id": patient_id,
-                        "appointment_datetime": appt_dt.isoformat() + "Z",
-                        "clinic_id": "C01",
-                        "provider_id": random.choice(providers),
-                        "appointment_type": random.choice(appt_types),
-                        "status": "Scheduled",
-                        "age": random.randint(18, 85),
-                        "gender": random.choice(["M", "F"]),
-                        "distance_to_clinic": round(random.uniform(0.5, 20.0), 1),
-                        "historical_no_show_rate": round(random.uniform(0.0, 1.0), 2)
-                    })
+            for row in pred_sample:
+                # Assign a random time for the dashboard UI
+                hour = random.choice(hours_to_add)
+                date_str = row['appointment_date'] # "YYYY-MM-DD"
+                
+                # e.g., "2026-03-17T09:00:00Z"
+                dt_iso = f"{date_str}T{hour:02d}:00:00Z"
+                
+                raw_appointments.append({
+                    "appointment_id": f"A{random.randint(1000, 9999)}",
+                    "patient_id": row['patient_id'],
+                    "appointment_datetime": dt_iso,
+                    "clinic_id": "C01",
+                    "provider_id": random.choice(providers),
+                    "appointment_type": row['appointment_type'],
+                    "status": "Scheduled",
+                    "age": row['age'],
+                    "gender": random.choice(["M", "F"]),
+                    "distance_to_location": row['distance_to_location'],
+                    "days_since_appointment_created": row['days_since_appointment_created'],
+                    "days_since_last_appointment": row['days_since_last_appointment'],
+                    "prev_no_show_count": row['prev_no_show_count'],
+                    "no_show_ratio": row['no_show_ratio']
+                })
 
         dashboard_data = []
 
