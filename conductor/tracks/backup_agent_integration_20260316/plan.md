@@ -12,8 +12,8 @@
     - [x] Implement Feature: Create a styled `Dialog.tsx` component in `frontend/src/components/ui/` matching the design system (652ae1d)
 - [x] Task: Conductor - User Manual Verification 'Phase 2: Frontend Dialog Component' (Protocol in workflow.md)
 
-## Phase 3: Connect UI to Backend Logic
+## Phase 3: Connect UI to Backend Logic [checkpoint: 17a8641]
 - [x] Task: Implement backup selection dialog
     - [x] Write Tests to verify the dialog displays sorted suggestions and handles promotion clicks (d4b2c1a)
     - [x] Implement Feature: Update `Dashboard` and `CalendarView` to fetch suggestions from `/promote`, open the dialog, and handle one-click promotion logic (d4b2c1a)
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Connect UI to Backend Logic' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Connect UI to Backend Logic' (Protocol in workflow.md)
