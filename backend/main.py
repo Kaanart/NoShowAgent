@@ -2,11 +2,13 @@ from fastapi import FastAPI
 from typing import List
 from .risk_engine import RiskEngine
 from .middleware import AuditLogMiddleware
+from .backup_agent import BackupPatientAgent
 
 app = FastAPI()
 app.add_middleware(AuditLogMiddleware)
 
 risk_engine = RiskEngine()
+backup_agent = BackupPatientAgent()
 
 @app.get("/health")
 def health_check():
@@ -54,20 +56,15 @@ from fastapi import HTTPException
 @app.post("/promote/{appointment_id}")
 def promote_patient(appointment_id: int):
     """
-    Simulates auto-promoting a waitlist patient to fill a high-risk appointment slot.
+    Returns a list of suggested backup patients for a high-risk appointment slot.
     """
     if appointment_id == 999:
         raise HTTPException(status_code=404, detail="Appointment not found")
         
-    # In a real system, we'd query the waitlist, find the best match, 
-    # update the database, and send a notification.
-    # For now, we mock a successful promotion using the first waitlist patient.
-    waitlist = get_waitlist()
-    best_candidate = waitlist[0] 
+    suggestions = backup_agent.find_backups(appointment_id)
     
     return {
         "status": "success",
         "original_appointment_id": appointment_id,
-        "promoted_patient_id": best_candidate["id"],
-        "message": f"Successfully promoted patient {best_candidate['patient_name']}."
+        "suggestions": suggestions
     }
